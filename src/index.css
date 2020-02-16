@@ -5,6 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+	background: #ddd;
+}
+footer {
+  border-top: 1px solid #999;
+  text-align: center;
+  margin-top: 64px;
 }
 
 code {
@@ -95,11 +101,13 @@ ol, ul {
   background: #fff;
   padding: 4px;
   border-radius: 4px;
-  width: 500px;
+  min-width: 500px;
 }
 
 .game-info {
   margin-left: 20px;
+  max-width: 600px;
+  margin-top: 32px;
 }
 .progress {
   justify-content: space-between;

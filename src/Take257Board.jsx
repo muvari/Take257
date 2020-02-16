@@ -56,10 +56,10 @@ export class Take257Board extends React.Component {
     else if (this.props.ctx.phase === "box")
       phase = <i class="fas fa-th"></i>;
     
-		return (
+		return (<React.Fragment>    
+      <div className="row"><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
 			<div className="game row">
-        <div className="row"><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
-        <div className="game-board col-4">
+        <div className="game-board">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
               <div className="score blue">{this.props.G.scores[1]}</div>
@@ -70,7 +70,7 @@ export class Take257Board extends React.Component {
 					</ProgressBar>
           <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} />
         </div>
-        <div className="game-info col-4">
+        <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
 						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers)}</div>
@@ -86,6 +86,7 @@ export class Take257Board extends React.Component {
 					<Line data={chartData} options={chartOptions} width={400} height={250} />
 				</div>
       </div>
+      </React.Fragment>  
 		);
 	}
 }
