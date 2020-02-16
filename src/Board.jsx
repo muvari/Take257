@@ -7,6 +7,9 @@ export class Board extends React.Component {
 			<Square
         id={i}
         value={this.props.G.gridValues[i]}
+        score={this.props.G.gridScores[i]}
+        moves={this.props.moves}
+        ctx={this.props.ctx}
 			/>
 		);
 	}
