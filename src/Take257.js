@@ -65,7 +65,7 @@ const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toS
 
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)];
-  if (currentMargin === -9 || currentMargin === 9)
+  if (currentMargin + num <= -10 || currentMargin + num >= 10)
     return;
   
   G.gridScores[i][ctx.currentPlayer] += num;
@@ -134,6 +134,9 @@ const boxClick = (G, ctx, i) => {
 }
 
 const clickCell = (G, ctx, i) => {
+  if (G.selectedCell === i)
+    return;
+
   if (ctx.phase === "row")
     rowClick(G, ctx, i);
   else if (ctx.phase === "column")
@@ -141,16 +144,47 @@ const clickCell = (G, ctx, i) => {
   else if (ctx.phase === "box")
     boxClick(G, ctx, i);  
 
+  G.selectedCell = i;
+  getCurrentScores(G, ctx);
   ctx.events.endTurn();
+}
+
+
+const winningPlayer = (array) => array.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+
+const getCurrentScores = (G, ctx) => {
+  const scores = Array(ctx.numPlayers).fill(0);
+  const lockedScores = Array(ctx.numPlayers).fill(0);
+  const states = Array(ctx.numPlayers).fill(0);
+  for (let i = 0; i < G.gridScores.length; i++) {
+    if (G.gridScores[i][0] === G.gridScores[i][1])
+      continue;
+    const score = G.gridScores[i];
+    const winner = winningPlayer(score);
+    states[winner] += 1;
+    scores[winner] += G.gridValues[i];
+  }
+  G.scores = scores;
+  G.states = states;
+  G.lockedScores = lockedScores;
+}
+
+const onPhaseEnd = (G, ctx) => {
+  G.selectedCell = undefined;
+  for (let i = 0; i < G.scores.length; i++) {
+    G.history[i].push(G.scores[i]);
+  }
 }
 
 export const Take257 = {
   setup: (ctx) => ({
-    scores: [0, 0],
-    lockedScores: [0, 0],
-    selectedCell: -1,
+    scores: Array(ctx.numPlayers).fill(0),
+    lockedScores: Array(ctx.numPlayers).fill(0),
+    states: Array(ctx.numPlayers).fill(0),
+    selectedCell: undefined,
     gridValues: setupGridValues(ctx),
     gridScores: Array(64).fill(Array(ctx.numPlayers).fill(0)),
+    history: Array(ctx.numPlayers).fill([])
   }),
 
   moves: {
@@ -172,21 +206,24 @@ export const Take257 = {
       moves: { clickCell },
       start: true,
       next: 'column',
+      onEnd: onPhaseEnd
     },
   
     column: {
       moves: { clickCell },
       next: 'box',
+      onEnd: onPhaseEnd
     },
 
     box: {
       moves: { clickCell },
       next: 'row',
+      onEnd: onPhaseEnd
     },
   },
 
   endIf: (G, ctx) => {
-    if (ctx.turn >= NUM_OF_TURNS * 2 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
+    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
       return { winner: ctx.currentPlayer };
     }
   },

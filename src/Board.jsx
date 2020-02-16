@@ -6,6 +6,7 @@ export class Board extends React.Component {
 		return (
 			<Square
         id={i}
+        key={i}
         value={this.props.G.gridValues[i]}
         score={this.props.G.gridScores[i]}
         moves={this.props.moves}
@@ -20,7 +21,7 @@ export class Board extends React.Component {
       const squares = [];
       for (let j = 0; j < 8; j++)
         squares.push(this.renderSquare((8 * i) + j))
-      rows.push(<div className="board-row">{squares}</div>);
+      rows.push(<div className="board-row" key={`board${i}`}>{squares}</div>);
     }
 		return (
 			<div>

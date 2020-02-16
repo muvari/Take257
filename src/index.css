@@ -85,9 +85,6 @@ ol, ul {
 .square:focus {
   outline: none;
 }
-.square:hover {
-background-color: #d9534f;
-}
 	
 .kbd-navigation .square:focus {
   background: #ddd;
@@ -107,4 +104,22 @@ background-color: #d9534f;
 
 .game-info {
   margin-left: 20px;
+}
+.progress {
+  justify-content: space-between;
+}
+.red-bar {
+  background-color: #c9302c;
+}
+.blue-bar {
+  background-color: #337ab7;
+}
+.lockedred-bar {
+  background-color: red;
+}
+.lockedblue-bar {
+  background-color: blue;
+}
+.row {
+  justify-content: center;
 }

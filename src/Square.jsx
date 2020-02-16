@@ -52,7 +52,7 @@ const BLUE_CODES = [
 
 export class Square extends React.Component {
 	setTextColor() {
-		if (this.props.squareColor === 'red' || this.props.squareColor === 'blue')
+		if (Math.abs(this.props.score[1] - this.props.score[0]) >= 9)
 			return 'white';
 		else
 			return 'black';
