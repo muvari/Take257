@@ -57,8 +57,9 @@ export class Take257Board extends React.Component {
       phase = <i class="fas fa-th"></i>;
     
 		return (
-			<div className="game">
-        <div className="game-board">
+			<div className="game row">
+        <div className="row"><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
+        <div className="game-board col-4">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
               <div className="score blue">{this.props.G.scores[1]}</div>
@@ -69,17 +70,16 @@ export class Take257Board extends React.Component {
 					</ProgressBar>
           <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} />
         </div>
-        <div className="game-info">
-					<div><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
+        <div className="game-info col-4">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
-						<h3 className="col-12" style={{ textAlign: 'center' }}>Turn</h3>
 						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers)}</div>
+            <div className="slash">/</div>
 						<div className="square info">{36}</div>
 						<div className="square info">{phase}</div>
 					</div>
 					<div className="row">
-						<h3 className="col-12" style={{ textAlign: 'center' }}># of Boxes</h3>
+						<h3 className="col-12" style={{ textAlign: 'center' }}># of Squares</h3>
 						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.states[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.states[1]}</div>
 					</div>

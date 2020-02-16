@@ -78,10 +78,6 @@ ol, ul {
   width: 60px;
 }
 
-.square.info {
-	margin-left: 20px;
-}
-
 .square:focus {
   outline: none;
 }
@@ -92,14 +88,14 @@ ol, ul {
 
 .game {
 	background: #ddd;
-  display: flex;
-  flex-direction: row;
+  min-width: 500px;
 }
 
 .game-board {
   background: #fff;
   padding: 4px;
   border-radius: 4px;
+  width: 500px;
 }
 
 .game-info {
@@ -122,4 +118,10 @@ ol, ul {
 }
 .row {
   justify-content: center;
+}
+.slash {
+  font-size: 40px;
+  width: 30px;
+  text-align: center;
+  font-weight: bold;
 }

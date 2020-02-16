@@ -1,29 +1,5 @@
 import React from 'react';
 
-const COLOR_CODES = [
-	'blue',
-	'#054C89',
-	'#1F66A3',
-	'#387FBC',
-	'#6BB2EF',
-	'#84CBFF',
-	'#9EE5FF',
-	'#B7FEFF',
-	'#D1FFFF',
-	'#EAFFFF',
-	'#ffffff',
-	'#FFE5E1',
-	'#FFCECA',
-	'#FFB7B3',
-	'#FFA09C',
-	'#FF8985',
-	'#F8726E',
-	'#E15B57',
-	'#CA4440',
-	'#b32d29',
-	'red',
-];
-
 const RED_CODES = [
 	'#FFE5E1',
 	'#FFCECA',
@@ -63,9 +39,9 @@ export class Square extends React.Component {
       return 'white';
     const indexOfMaxValue = this.props.score.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
     if (indexOfMaxValue === 0)
-      return RED_CODES[this.props.score[0] - this.props.score[1]];
+      return RED_CODES[Math.min(this.props.score[0] - this.props.score[1], 9)];
     else
-      return BLUE_CODES[this.props.score[1] - this.props.score[0]];
+      return BLUE_CODES[Math.min(this.props.score[1] - this.props.score[0], 9)];
   }
 
   onClick = () => {

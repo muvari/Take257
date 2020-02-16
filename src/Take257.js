@@ -64,8 +64,8 @@ export const setupGridValues = (ctx) => {
 const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toString();
 
 const changeScore = (G, ctx, i, num) => {
-  const currentMargin = G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)];
-  if (currentMargin + num <= -10 || currentMargin + num >= 10)
+  const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
+  if (currentMargin >= 10)
     return;
   
   G.gridScores[i][ctx.currentPlayer] += num;
@@ -192,6 +192,7 @@ export const Take257 = {
   },
 
   turn: {
+    moveLimit: 1,
     order: {
       first: (G, ctx) => (parseInt(ctx.turn/ctx.numPlayers) % ctx.numPlayers),
       next: (G, ctx) => {
@@ -226,5 +227,14 @@ export const Take257 = {
     if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
       return { winner: ctx.currentPlayer };
     }
+  },
+
+  ai: {
+    enumerate: (G, ctx) => {
+      let moves = [];
+      for (let i = 0; i < 64; i++)
+        moves.push({ move: 'clickCell', args: [i] });
+      return moves;
+    },    
   },
 };
