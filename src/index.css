@@ -11,3 +11,100 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+  margin-bottom: 4px;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.score-board {
+	margin-right: 4px;
+	margin-left: 4px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 0;
+	overflow: hidden;
+}
+
+.score {
+  border: 1px solid #999;
+  border-radius: 4px;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 60px;
+  height: 60px;
+  margin-right: 70px;
+  margin-left: 70px;
+  margin-top: 1px;
+  margin-bottom: 20px;
+  padding: 0;
+  text-align: center;
+  width: 100px;
+  color: white;	
+  float: left;
+}
+
+.score.red {
+	background: #c9302c;
+}
+
+.score.blue {
+	background: #337ab7;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  float: left;
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 60px;
+  height: 60px;
+  margin-right: 1px;
+  margin-top: 1px;
+  padding: 0;
+  text-align: center;
+  width: 60px;
+}
+
+.square.info {
+	margin-left: 20px;
+}
+
+.square:focus {
+  outline: none;
+}
+.square:hover {
+background-color: #d9534f;
+}
+	
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+	background: #ddd;
+  display: flex;
+  flex-direction: row;
+}
+
+.game-board {
+  background: #fff;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.game-info {
+  margin-left: 20px;
+}
