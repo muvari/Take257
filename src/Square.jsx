@@ -100,7 +100,7 @@ export class Square extends React.Component {
     if (this.isSelectable() && this.props.hoveredCell === this.props.id)
       return this.props.ctx.playOrderPos === 0 ? "red-big-hover" : "blue-big-hover";
     else if (this.props.selectedCell === this.props.id)
-      return this.props.ctx.playOrderPos === 0 ? "blue-big-hover" : "red-big-hover";
+      return this.props.lastSelected === 1 ? "blue-big-hover" : "red-big-hover";
 
     if (!this.isSelectable()) return;
     if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))

@@ -15,7 +15,7 @@ export class Take257Board extends React.Component {
 		if (this.props.ctx.gameover && this.props.ctx.gameover.winner) {
 			status = "Winner: " + this.props.ctx.gameover.winner;
 		} else {
-			status = "Turn: " + (this.props.ctx.playOrderPos === 0 ? "Red" : "Blue");
+			status = "Round: " + (this.props.ctx.playOrderPos === 0 ? "Red" : "Blue");
     }
     
     let phase;
@@ -43,7 +43,7 @@ export class Take257Board extends React.Component {
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
-						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers) + 1}</div>
+						<div className="square info">{Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1}</div>
             <div className="slash">/</div>
 						<div className="square info">{24}</div>
 						<div className="square info">{phase}</div>

@@ -172,6 +172,7 @@ const clickCell = (G, ctx, i) => {
     boxClick(G, ctx, i);  
 
   G.selectedCell = i;
+  G.lastSelected = ctx.playOrderPos;
   getCurrentScores(G, ctx);
 }
 
@@ -202,7 +203,7 @@ export const isLockedSquare = (score) => {
 }
 
 const onPhaseEnd = (G, ctx) => {
-  G.selectedCell = undefined;
+  // G.selectedCell = undefined;
   G.history.push({name: `Turn ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 
@@ -212,6 +213,7 @@ export const Take257 = {
     lockedScores: Array(ctx.numPlayers).fill(0),
     states: Array(ctx.numPlayers).fill(0),
     selectedCell: undefined,
+    lastSelected: undefined,
     gridValues: setupGridValues(ctx),
     gridScores: Array(64).fill(Array(ctx.numPlayers).fill(0)),
     history: []

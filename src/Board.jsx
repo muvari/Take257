@@ -21,6 +21,7 @@ export class Board extends React.Component {
         value={this.props.G.gridValues[i]}
         score={this.props.G.gridScores[i]}
         selectedCell={this.props.G.selectedCell}
+        lastSelected={this.props.G.lastSelected}
         hoveredCell={this.state.hoveredCell}
         moves={this.props.moves}
         ctx={this.props.ctx}
