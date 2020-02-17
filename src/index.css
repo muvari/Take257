@@ -39,7 +39,12 @@ ol, ul {
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 0;
-	overflow: hidden;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+}
+.loading {
+  height: 100%;
 }
 
 .score {
@@ -49,10 +54,6 @@ ol, ul {
   font-weight: bold;
   line-height: 60px;
   height: 60px;
-  margin-right: 70px;
-  margin-left: 70px;
-  margin-top: 1px;
-  margin-bottom: 20px;
   padding: 0;
   text-align: center;
   width: 100px;
@@ -149,4 +150,7 @@ ol, ul {
 }
 path {
   fill: none;
+}
+.info-text {
+  text-align: center;
 }

@@ -1,6 +1,4 @@
 import React from 'react';
-// import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-// import Popover from 'react-bootstrap/Popover'
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -68,6 +66,10 @@ export class Square extends React.Component {
   isSelectable() {
     return !this.isLockedSquare() && this.props.selectedCell !== this.props.id;
   }
+
+  squareLabel() {
+    return `Square ${this.props.id}: ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`;
+  }
   
   setBackgroundColor() {   
     if (this.props.score[0] === this.props.score[1])
@@ -77,17 +79,6 @@ export class Square extends React.Component {
     else
       return BLUE_CODES[this.getNetScore()];
   }
-
-  // getPopover() {
-  //   return (
-  //     <Popover id="popover-basic">
-  //       <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`}</Popover.Title>
-  //       <Popover.Content>
-  //         {`Red: ${this.props.score[0]}`}<br/> {`Blue: ${this.props.score[1]}`}
-  //       </Popover.Content>
-  //     </Popover>
-  //   );
-  // }
 
   onClick = () => {
     if (this.isSelectable()) {
@@ -153,16 +144,18 @@ export class Square extends React.Component {
     }
   }
 
-	render() {    
-    //  {/*  <OverlayTrigger trigger="hover" placement="top" overlay={this.getPopover()}> */}
+	render() {
 		return (
-          <button key={this.props.id} 
-            className={`square ${this.getShadowClass()}`}
-            onClick={this.onClick}
-            onMouseEnter={() => {this.props.onHover(this.props.id); }}
-            style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor(), cursor: `${this.isSelectable() ? "pointer" : "initial"}` }}>
-            {this.props.value}
-          </button>
+      <button key={this.props.id} 
+        className={`square ${this.getShadowClass()}`}
+        onClick={this.onClick}
+        onMouseEnter={() => { 
+          this.props.onHover(this.props.id); 
+          this.props.setInfoText(this.squareLabel());
+        }}
+        style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor(), cursor: `${this.isSelectable() ? "pointer" : "initial"}` }}>
+        {this.props.value}
+      </button>
 		)
 	}
 }

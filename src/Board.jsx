@@ -26,6 +26,7 @@ export class Board extends React.Component {
         moves={this.props.moves}
         ctx={this.props.ctx}
         onHover={this.changeHoveredCell}
+        setInfoText={this.props.setInfoText}
 			/>
 		);
   }

@@ -4,11 +4,26 @@ import { ProgressBar } from 'react-bootstrap';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts';
+import { BounceLoader } from 'react-spinners';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 const TOTAL_POINTS = 512;
 
 export class Take257Board extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      infoText: ""
+    }
+
+    this.setInfoText = this.setInfoText.bind(this);
+  }
+
+  setInfoText(text) {
+    this.setState({ infoText: text });
+  }
 
 	render() {
     let status;
@@ -32,13 +47,25 @@ export class Take257Board extends React.Component {
         <div className="game-board">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
+              <div className="loading" style={{display: `${!this.props.isActive ? "block" : "none"}`}}>
+                Blue thinking...
+                <BounceLoader
+                  css={{margin: "0 auto"}}
+                  size={40}
+                  color={"#337ab7"}
+                  loading={!this.props.isActive}
+                />
+              </div>
               <div className="score blue">{this.props.G.scores[1]}</div>
             </div>
           <ProgressBar max={TOTAL_POINTS} style={{ marginBottom: "8px" }}>
             <ProgressBar max={TOTAL_POINTS} bsPrefix="red" now={this.props.G.scores[0]} key={1} />
             <ProgressBar max={TOTAL_POINTS} bsPrefix="blue" now={this.props.G.scores[1]} key={2} />
 					</ProgressBar>
-          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} />
+          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} setInfoText={this.setInfoText} />
+          <div className="info-text">
+            {this.state.infoText}
+          </div>
         </div>
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>

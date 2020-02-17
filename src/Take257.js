@@ -204,7 +204,7 @@ export const isLockedSquare = (score) => {
 
 const onPhaseEnd = (G, ctx) => {
   // G.selectedCell = undefined;
-  G.history.push({name: `Turn ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
+  G.history.push({name: `Rd ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 
 export const Take257 = {
