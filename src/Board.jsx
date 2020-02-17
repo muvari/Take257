@@ -2,6 +2,17 @@ import React from 'react';
 import { Square } from './Square';
 
 export class Board extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hoveredCell: undefined
+    };
+
+    this.changeHoveredCell = this.changeHoveredCell.bind(this);
+  }
+
 	renderSquare(i) {
 		return (
 			<Square
@@ -9,11 +20,18 @@ export class Board extends React.Component {
         key={i}
         value={this.props.G.gridValues[i]}
         score={this.props.G.gridScores[i]}
+        selectedCell={this.props.G.selectedCell}
+        hoveredCell={this.state.hoveredCell}
         moves={this.props.moves}
         ctx={this.props.ctx}
+        onHover={this.changeHoveredCell}
 			/>
 		);
-	}
+  }
+  
+  changeHoveredCell = (i) => {
+    this.setState({hoveredCell: i})
+  }
 
 	render() {
     const rows = [];

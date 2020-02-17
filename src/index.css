@@ -87,6 +87,19 @@ ol, ul {
 .square:focus {
   outline: none;
 }
+
+.red-big-hover {
+  border: 2px solid rgba(201,48,44,1);
+}
+.blue-big-hover {
+  border: 2px solid rgba(51,122,183,1);
+}
+.red-hover {
+  border: 1px solid rgba(201,48,44,1);
+}
+.blue-hover {
+  border: 1px solid rgba(51,122,183,1);
+}
 	
 .kbd-navigation .square:focus {
   background: #fbfbfc;

@@ -34,7 +34,7 @@ export class Square extends React.Component {
   
 
 	setTextColor() {
-		if (Math.abs(this.props.score[1] - this.props.score[0]) >= 9)
+		if (this.isLockedSquare())
 			return 'white';
 		else
 			return 'black';
@@ -60,6 +60,14 @@ export class Square extends React.Component {
     else
       return Math.min(this.props.score[1] - this.props.score[0], 9);
   }
+
+  isLockedSquare() {
+    return (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
+  }
+
+  isSelectable() {
+    return !this.isLockedSquare() && this.props.selectedCell !== this.props.id;
+  }
   
   setBackgroundColor() {   
     if (this.props.score[0] === this.props.score[1])
@@ -73,7 +81,7 @@ export class Square extends React.Component {
   getPopover() {
     return (
       <Popover id="popover-basic">
-        <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}`}</Popover.Title>
+        <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`}</Popover.Title>
         <Popover.Content>
           {`Red: ${this.props.score[0]}`}<br/> {`Blue: ${this.props.score[1]}`}
         </Popover.Content>
@@ -82,13 +90,25 @@ export class Square extends React.Component {
   }
 
   onClick = () => {
-    this.props.moves.clickCell(this.props.id);
+    if (this.isSelectable())
+      this.props.moves.clickCell(this.props.id);
+  }
+
+  getShadowClass = () => {
+    if (this.isSelectable() && this.props.hoveredCell === this.props.id)
+      return this.props.ctx.playOrderPos === 0 ? "red-big-hover" : "blue-big-hover";
+    else if (this.props.selectedCell === this.props.id)
+      return this.props.ctx.playOrderPos === 0 ? "blue-big-hover" : "red-big-hover";
   }
 
 	render() {
 		return (
       <OverlayTrigger trigger="hover" placement="top" overlay={this.getPopover()}>
-          <button key={this.props.id} className="square" onClick={this.onClick} style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor() }}>
+          <button key={this.props.id} 
+            className={`square ${this.getShadowClass()}`}
+            onClick={this.onClick}
+            onMouseEnter={() => {this.props.onHover(this.props.id); }}
+            style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor(), cursor: `${this.isSelectable() ? "pointer" : "initial"}` }}>
             {this.props.value}
           </button>
       </OverlayTrigger>

@@ -20,11 +20,11 @@ export class Take257Board extends React.Component {
     
     let phase;
     if (this.props.ctx.phase === "row")
-      phase = <i class="fas fa-arrows-alt-h"></i>
+      phase = <i className="fas fa-arrows-alt-h"></i>
     else if (this.props.ctx.phase === "column")
-      phase = <i class="fas fa-arrows-alt-v"></i>
+      phase = <i className="fas fa-arrows-alt-v"></i>
     else if (this.props.ctx.phase === "box")
-      phase = <i class="fas fa-th"></i>;
+      phase = <i className="fas fa-th"></i>;
     
 		return (<React.Fragment>    
       <div className="row"><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
@@ -53,6 +53,11 @@ export class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.states[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.states[1]}</div>
 					</div>
+          <div className="row">
+						<h3 className="col-12" style={{ textAlign: 'center' }}>Locked Squares</h3>
+						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.lockedScores[0]}</div>
+						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
+					</div>
           <LineChart width={500} height={250} data={this.props.G.history} margin={{
             top: 5, right: 30, left: 20, bottom: 5,
           }}>
@@ -64,8 +69,10 @@ export class Take257Board extends React.Component {
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
           </LineChart>
           <div style={{width: "500px"}}>
-          <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. Your goal is to capture the majority of them by selecting groups of squares over 36 rounds. 
-          You can lock a square by getting 10 points above the other player. Any square outside of the grouping loses you a point there.
+          <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. 
+          Your goal is to capture the majority of them by selecting groups of squares over 36 rounds. 
+          You can lock a square by getting 9 points above the other player. Any square outside of your selection loses you a point.
+          First player rotates every round.
           </div>
 				</div>
       </div>

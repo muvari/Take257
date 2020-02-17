@@ -163,10 +163,16 @@ const getCurrentScores = (G, ctx) => {
     const winner = winningPlayer(score);
     states[winner] += 1;
     scores[winner] += G.gridValues[i];
+    if (isLockedSquare(score))
+      lockedScores[winner] += G.gridValues[i];
   }
   G.scores = scores;
   G.states = states;
   G.lockedScores = lockedScores;
+}
+
+const isLockedSquare = (score) => {
+  return (Math.abs(score[1] - score[0]) >= 9);
 }
 
 const onPhaseEnd = (G, ctx) => {
