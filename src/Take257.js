@@ -3,7 +3,7 @@ const MIN_STATE = 1;
 const MAX_STATE = 51;
 const MIN_REGION = 31;
 const MAX_REGION = 102;
-const NUM_OF_TURNS = 36;
+const NUM_OF_TURNS = 24;
 const SQUARES = 64;
 
 const randomRowTotal = (ctx) => {
@@ -254,7 +254,8 @@ export const Take257 = {
   },
 
   endIf: (G, ctx) => {
-    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
+    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 1 && G.scores[ctx.currentPlayer] > TOTAL_POINTS / 2 ) {
+    //if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
       return { winner: G.scores[0] > G.scores[1] ? "0" : "1" };
     }
   },
@@ -264,6 +265,7 @@ export const Take257 = {
       let moves = [];
       for (let i = 0; i < 64; i++) {
         if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;
+        if (G.gridValues[i] < 10) continue;
         moves.push({ move: 'clickCell', args: [i] });
       }
       return moves;

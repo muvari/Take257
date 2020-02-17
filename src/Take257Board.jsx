@@ -45,7 +45,7 @@ export class Take257Board extends React.Component {
 					<div className="row">
 						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers) + 1}</div>
             <div className="slash">/</div>
-						<div className="square info">{36}</div>
+						<div className="square info">{24}</div>
 						<div className="square info">{phase}</div>
 					</div>
 					<div className="row">
