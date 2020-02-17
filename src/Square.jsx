@@ -90,8 +90,10 @@ export class Square extends React.Component {
   // }
 
   onClick = () => {
-    if (this.isSelectable())
+    if (this.isSelectable()) {
       this.props.moves.clickCell(this.props.id);
+      this.props.onHover(undefined);
+    }
   }
 
   getShadowClass = () => {

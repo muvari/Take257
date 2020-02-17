@@ -61,7 +61,7 @@ export const setupGridValues = (ctx) => {
   return values;
 }
 
-const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toString();
+export const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toString();
 
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
@@ -173,7 +173,6 @@ const clickCell = (G, ctx, i) => {
 
   G.selectedCell = i;
   getCurrentScores(G, ctx);
-  ctx.events.endTurn();
 }
 
 
@@ -198,7 +197,7 @@ const getCurrentScores = (G, ctx) => {
   G.lockedScores = lockedScores;
 }
 
-const isLockedSquare = (score) => {
+export const isLockedSquare = (score) => {
   return (Math.abs(score[1] - score[0]) >= 9);
 }
 
@@ -256,16 +255,18 @@ export const Take257 = {
 
   endIf: (G, ctx) => {
     if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
-      return { winner: G.scores[0] > G.scores[1] ? "Red" : "Blue" };
+      return { winner: G.scores[0] > G.scores[1] ? "0" : "1" };
     }
   },
 
   ai: {
     enumerate: (G, ctx) => {
       let moves = [];
-      for (let i = 0; i < 64; i++)
+      for (let i = 0; i < 64; i++) {
+        if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;
         moves.push({ move: 'clickCell', args: [i] });
+      }
       return moves;
-    },    
+    }
   },
 };

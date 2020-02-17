@@ -54,7 +54,7 @@ export class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.states[1]}</div>
 					</div>
           <div className="row">
-						<h3 className="col-12" style={{ textAlign: 'center' }}>Locked Squares</h3>
+						<h3 className="col-12" style={{ textAlign: 'center' }}>Locked Points</h3>
 						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.lockedScores[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
 					</div>
