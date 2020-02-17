@@ -1,6 +1,6 @@
 import React from 'react';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover'
+// import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+// import Popover from 'react-bootstrap/Popover'
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -78,16 +78,16 @@ export class Square extends React.Component {
       return BLUE_CODES[this.getNetScore()];
   }
 
-  getPopover() {
-    return (
-      <Popover id="popover-basic">
-        <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`}</Popover.Title>
-        <Popover.Content>
-          {`Red: ${this.props.score[0]}`}<br/> {`Blue: ${this.props.score[1]}`}
-        </Popover.Content>
-      </Popover>
-    );
-  }
+  // getPopover() {
+  //   return (
+  //     <Popover id="popover-basic">
+  //       <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`}</Popover.Title>
+  //       <Popover.Content>
+  //         {`Red: ${this.props.score[0]}`}<br/> {`Blue: ${this.props.score[1]}`}
+  //       </Popover.Content>
+  //     </Popover>
+  //   );
+  // }
 
   onClick = () => {
     if (this.isSelectable())
@@ -99,11 +99,18 @@ export class Square extends React.Component {
       return this.props.ctx.playOrderPos === 0 ? "red-big-hover" : "blue-big-hover";
     else if (this.props.selectedCell === this.props.id)
       return this.props.ctx.playOrderPos === 0 ? "blue-big-hover" : "red-big-hover";
+
+    if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
+      return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+    else if (this.props.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
+      return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+    else if (this.props.phase === "box")
+      return;
   }
 
-	render() {
+	render() {    
+    //  {/*  <OverlayTrigger trigger="hover" placement="top" overlay={this.getPopover()}> */}
 		return (
-      <OverlayTrigger trigger="hover" placement="top" overlay={this.getPopover()}>
           <button key={this.props.id} 
             className={`square ${this.getShadowClass()}`}
             onClick={this.onClick}
@@ -111,7 +118,6 @@ export class Square extends React.Component {
             style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor(), cursor: `${this.isSelectable() ? "pointer" : "initial"}` }}>
             {this.props.value}
           </button>
-      </OverlayTrigger>
 		)
 	}
 }

@@ -65,7 +65,7 @@ const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toS
 
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
-  if (currentMargin >= 10)
+  if (currentMargin >= 9)
     return;
   
   G.gridScores[i][ctx.currentPlayer] += num;
