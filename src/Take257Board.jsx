@@ -9,6 +9,7 @@ import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 const TOTAL_POINTS = 512;
 
 export class Take257Board extends React.Component {
+
 	render() {
     let status;
 		if (this.props.ctx.gameover && this.props.ctx.gameover.winner) {
@@ -57,7 +58,7 @@ export class Take257Board extends React.Component {
           }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis ticks={[0, 64, 128, 192, 256, 320]} />
+            <YAxis ticks={[64, 128, 192, 256, 320]} />
             <Tooltip />
             <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />

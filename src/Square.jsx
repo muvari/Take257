@@ -1,4 +1,6 @@
 import React from 'react';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover'
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -26,22 +28,57 @@ const BLUE_CODES = [
   'blue',
 ];
 
+const TEAM_LABELS = ["Red", "Blue"];
+
 export class Square extends React.Component {
+  
+
 	setTextColor() {
 		if (Math.abs(this.props.score[1] - this.props.score[0]) >= 9)
 			return 'white';
 		else
 			return 'black';
   }
+
+  getWinningPlayer() {
+    if (this.props.score[0] === this.props.score[1])
+      return undefined;
+    return this.props.score.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+  }
+
+  getWinningLabel(index) {
+    if (index === undefined)
+      return "Draw";
+    return TEAM_LABELS[index];
+  }
+
+  getNetScore() {
+    if (this.props.score[0] === this.props.score[1])
+      return '';
+    if (this.getWinningPlayer() === 0)
+      return Math.min(this.props.score[0] - this.props.score[1], 9);
+    else
+      return Math.min(this.props.score[1] - this.props.score[0], 9);
+  }
   
   setBackgroundColor() {   
     if (this.props.score[0] === this.props.score[1])
       return 'white';
-    const indexOfMaxValue = this.props.score.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-    if (indexOfMaxValue === 0)
-      return RED_CODES[Math.min(this.props.score[0] - this.props.score[1], 9)];
+    if (this.getWinningPlayer() === 0)
+      return RED_CODES[this.getNetScore()];
     else
-      return BLUE_CODES[Math.min(this.props.score[1] - this.props.score[0], 9)];
+      return BLUE_CODES[this.getNetScore()];
+  }
+
+  getPopover() {
+    return (
+      <Popover id="popover-basic">
+        <Popover.Title as="h3">{`${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}`}</Popover.Title>
+        <Popover.Content>
+          {`Red: ${this.props.score[0]}`}<br/> {`Blue: ${this.props.score[1]}`}
+        </Popover.Content>
+      </Popover>
+    );
   }
 
   onClick = () => {
@@ -49,18 +86,12 @@ export class Square extends React.Component {
   }
 
 	render() {
-		// var distance = Math.abs(COLOR_CODES.indexOf(this.props.squareColor) - MID_COLOR);
-		// const popoverHoverFocus = (
-		// 	<Popover id="popover-trigger-hover-focus" style={{ backgroundColor: this.props.squareColor, color: this.setTextColor() }}>
-		// 		<strong>+ {distance}</strong><br />
-		// 		<strong>+ {distance}</strong>
-		// 	</Popover>
-		// );
-
 		return (
-				<button key={this.props.id} className="square" onClick={this.onClick} style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor() }}>
-					{this.props.value}
-				</button>
+      <OverlayTrigger trigger="hover" placement="top" overlay={this.getPopover()}>
+          <button key={this.props.id} className="square" onClick={this.onClick} style={{ backgroundColor: this.setBackgroundColor(), color: this.setTextColor() }}>
+            {this.props.value}
+          </button>
+      </OverlayTrigger>
 		)
 	}
 }

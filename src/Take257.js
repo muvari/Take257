@@ -223,7 +223,7 @@ export const Take257 = {
 
   endIf: (G, ctx) => {
     if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 0 && G.scores.some((score) => score >= TOTAL_POINTS / 2)) {
-      return { winner: ctx.currentPlayer };
+      return { winner: G.scores[0] > G.scores[1] ? "Red" : "Blue" };
     }
   },
 
