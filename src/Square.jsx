@@ -100,12 +100,55 @@ export class Square extends React.Component {
     else if (this.props.selectedCell === this.props.id)
       return this.props.ctx.playOrderPos === 0 ? "blue-big-hover" : "red-big-hover";
 
+    if (!this.isSelectable()) return;
     if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
       return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
-    else if (this.props.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
+    else if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
       return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
-    else if (this.props.phase === "box")
-      return;
+    else if (this.props.ctx.phase === "box") {
+      const i = this.props.hoveredCell;
+      const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
+      if (i % 8 === 0) { 
+        // Remove left column       
+        let j = boxIndecies.indexOf(i-9);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i-1);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+7);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+      if (i % 8 === 7) { 
+        // Remove right column       
+        let j = boxIndecies.indexOf(i-7);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+1);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+9);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+      if (Math.floor(i / 8) === 0) {
+        // Remove top row       
+        let j = boxIndecies.indexOf(i-9);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i-8);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i-7);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+      if (Math.floor(i / 8) === 7) {
+        // Remove bottom row       
+        let j = boxIndecies.indexOf(i+9);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+8);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+7);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+
+
+      if (boxIndecies.indexOf(this.props.id) > -1)
+        return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+    }
   }
 
 	render() {    

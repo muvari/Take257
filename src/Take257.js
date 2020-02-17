@@ -111,17 +111,44 @@ const columnClick = (G, ctx, i) => {
 const validNum = (num) => {
   return num >= 0 && num < 64;
 }
-const boxClick = (G, ctx, i) => {
-  const boxIndecies = [];
-  boxIndecies.push(i - 9);
-  boxIndecies.push(i - 8);
-  boxIndecies.push(i - 7);
-  boxIndecies.push(i - 1);
-  boxIndecies.push(i + 1);
-  boxIndecies.push(i + 7);
-  boxIndecies.push(i + 8);
-  boxIndecies.push(i + 9);
-  boxIndecies.push(i);
+const boxClick = (G, ctx, i) => { 
+  const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9, i];
+  if (i % 8 === 0) { 
+    // Remove left column       
+    let j = boxIndecies.indexOf(i-9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-1);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (i % 8 === 7) { 
+    // Remove right column       
+    let j = boxIndecies.indexOf(i-7);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+1);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+9);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (Math.floor(i / 8) === 0) {
+    // Remove top row       
+    let j = boxIndecies.indexOf(i-9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-8);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (Math.floor(i / 8) === 7) {
+    // Remove bottom row       
+    let j = boxIndecies.indexOf(i+9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+8);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
 
   for (let j = 0; j < SQUARES; j++) {
     if (j === i) {
