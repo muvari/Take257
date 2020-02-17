@@ -1,7 +1,9 @@
 import React from 'react';
 import { Board } from './Board';
 import { ProgressBar } from 'react-bootstrap';
-import { Line } from 'react-chartjs-2';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
+} from 'recharts';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 const TOTAL_POINTS = 512;
@@ -14,39 +16,6 @@ export class Take257Board extends React.Component {
 		} else {
 			status = "Turn: " + (this.props.ctx.playOrderPos === 0 ? "Red" : "Blue");
     }
-
-    const chartData = {
-      labels: Array.from(Array(this.props.G.history[0].length).keys()),
-			datasets: [{
-        key: 'red',
-				label: 'Red',
-				borderColor: 'rgba(179,45,41,1)',				
-				data: this.props.G.history[0],
-				type: 'line',
-        fill: false,
-        },
-        {
-        key: 'blue',
-				label: 'Blue',
-				data: this.props.G.history[1],
-				borderColor: 'rgba(5,76,137,1)',
-				type: 'line',
-        fill: false,
-			  }]
-		};
-		var chartOptions = {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero: true,
-						min: 0,
-						suggestedMax: 300,
-						stepSize: 64
-					}
-				}]
-			},
-			legend: false
-    };
     
     let phase;
     if (this.props.ctx.phase === "row")
@@ -73,7 +42,7 @@ export class Take257Board extends React.Component {
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
-						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers)}</div>
+						<div className="square info">{parseInt(this.props.ctx.turn / this.props.ctx.numPlayers) + 1}</div>
             <div className="slash">/</div>
 						<div className="square info">{36}</div>
 						<div className="square info">{phase}</div>
@@ -83,7 +52,20 @@ export class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.states[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.states[1]}</div>
 					</div>
-					<Line data={chartData} options={chartOptions} width={400} height={250} />
+          <LineChart width={500} height={250} data={this.props.G.history} margin={{
+            top: 5, right: 30, left: 20, bottom: 5,
+          }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis ticks={[0, 64, 128, 192, 256, 320]} />
+            <Tooltip />
+            <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
+          </LineChart>
+          <div style={{width: "500px"}}>
+          <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. Your goal is to capture the majority of them by selecting groups of squares over 36 rounds. 
+          You can lock a square by getting 10 points above the other player. Any square outside of the grouping loses you a point there.
+          </div>
 				</div>
       </div>
       </React.Fragment>  

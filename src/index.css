@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-	background: #ddd;
+	background: #fbfbfc;
 }
 footer {
   border-top: 1px solid #999;
@@ -89,16 +89,17 @@ ol, ul {
 }
 	
 .kbd-navigation .square:focus {
-  background: #ddd;
+  background: #fbfbfc;
 }
 
 .game {
-	background: #ddd;
+	background: #fbfbfc;
   min-width: 500px;
 }
 
 .game-board {
   background: #fff;
+  box-shadow: 0 0 0 1px rgba(67,41,163,.08), 0 1px 5px 0 rgba(67,41,163,.08);
   padding: 4px;
   border-radius: 4px;
   min-width: 500px;
@@ -132,4 +133,7 @@ ol, ul {
   width: 30px;
   text-align: center;
   font-weight: bold;
+}
+path {
+  fill: none;
 }

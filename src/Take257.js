@@ -171,9 +171,7 @@ const getCurrentScores = (G, ctx) => {
 
 const onPhaseEnd = (G, ctx) => {
   G.selectedCell = undefined;
-  for (let i = 0; i < G.scores.length; i++) {
-    G.history[i].push(G.scores[i]);
-  }
+  G.history.push({name: `Turn ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 
 export const Take257 = {
@@ -184,7 +182,7 @@ export const Take257 = {
     selectedCell: undefined,
     gridValues: setupGridValues(ctx),
     gridScores: Array(64).fill(Array(ctx.numPlayers).fill(0)),
-    history: Array(ctx.numPlayers).fill([])
+    history: []
   }),
 
   moves: {
