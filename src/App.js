@@ -7,8 +7,8 @@ import { MCTSBot } from 'boardgame.io/ai';
 
 class CustomBot extends MCTSBot {
   constructor(ai) {
-    ai.iterations = 100;
-    ai.playoutDepth = 80;
+    ai.iterations = 300;
+    ai.playoutDepth = 48;
     super(ai);
   }
 }

@@ -95,9 +95,9 @@ export class Square extends React.Component {
 
     if (!this.isSelectable()) return;
     if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
-      return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+      return "red-hover";
     else if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
-      return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+      return "red-hover";
     else if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;
       const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
@@ -140,7 +140,7 @@ export class Square extends React.Component {
 
 
       if (boxIndecies.indexOf(this.props.id) > -1)
-        return this.props.ctx.playOrderPos === 0 ? "red-hover" : "blue-hover";
+        return "red-hover";
     }
   }
 

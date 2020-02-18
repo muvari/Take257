@@ -34,6 +34,7 @@ export class Take257Board extends React.Component {
     }
 
     const round = Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1;
+    const turn = (this.props.ctx.turn - 1) % 2 + 1;
     
     let phase;
     if (this.props.ctx.phase === "row")
@@ -49,7 +50,7 @@ export class Take257Board extends React.Component {
         <div className="game-board">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
-              { this.props.isActive || this.props.ctx.gameover ? (<div className="score-text" style={{ marginTop: "40px" }}>{`Rd. ${round}  - Your turn`}</div>) : (
+              { this.props.isActive || this.props.ctx.gameover ? (<div className="score-text" style={{ marginTop: "40px" }}>{`Rd. ${round}-${turn}  - Your turn`}</div>) : (
                 <div className="loading score-text">
                   <BounceLoader
                     css={{margin: "0 auto"}}
@@ -57,7 +58,7 @@ export class Take257Board extends React.Component {
                     color={"#337ab7"}
                     loading={!this.props.isActive}
                   />
-                  {`Rd. ${round} Blue thinking...`}
+                  {`Rd. ${round}-${turn} Blue thinking...`}
               </div>
               )
               }
