@@ -160,3 +160,7 @@ path {
   text-align: center;
   width: 105px;
 }
+line[y1="46.99999999999999"] {
+  stroke: #999;
+  stroke-dasharray: none;
+}
