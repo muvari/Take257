@@ -68,7 +68,7 @@ export class Square extends React.Component {
   }
 
   squareLabel() {
-    return `Square ${this.props.id}: ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()} ${this.isLockedSquare() ? "*" : ""}`;
+    return `Square ${this.props.id}: ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}${this.isLockedSquare() ? "*" : ""}`;
   }
   
   setBackgroundColor() {   
@@ -89,7 +89,7 @@ export class Square extends React.Component {
 
   getShadowClass = () => {
     if (this.isSelectable() && this.props.hoveredCell === this.props.id)
-      return this.props.ctx.playOrderPos === 0 ? "red-big-hover" : "blue-big-hover";
+      return "red-big-hover";
     else if (this.props.selectedCell === this.props.id)
       return this.props.lastSelected === 1 ? "blue-big-hover" : "red-big-hover";
 

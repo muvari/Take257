@@ -32,6 +32,8 @@ export class Take257Board extends React.Component {
 		} else {
 			status = "Round: " + (this.props.ctx.playOrderPos === 0 ? "Red" : "Blue");
     }
+
+    const round = Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1;
     
     let phase;
     if (this.props.ctx.phase === "row")
@@ -42,20 +44,24 @@ export class Take257Board extends React.Component {
       phase = <i className="fas fa-th"></i>;
     
 		return (<React.Fragment>    
-      <div className="row"><h1 style={{ textAlign: 'center' }}>Take 257</h1></div>
+      <div className="row"><h1 className="info-text">Take 257</h1></div>
 			<div className="game row">
         <div className="game-board">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
-              <div className="loading" style={{display: `${!this.props.isActive ? "block" : "none"}`}}>
-                Blue thinking...
-                <BounceLoader
-                  css={{margin: "0 auto"}}
-                  size={40}
-                  color={"#337ab7"}
-                  loading={!this.props.isActive}
-                />
+              { this.props.isActive || this.props.ctx.gameover ? (<div className="score-text" style={{ marginTop: "40px" }}>{`Rd. ${round}  - Your turn`}</div>) : (
+                <div className="loading score-text">
+                  <BounceLoader
+                    css={{margin: "0 auto"}}
+                    size={40}
+                    color={"#337ab7"}
+                    loading={!this.props.isActive}
+                  />
+                  {`Rd. ${round} Blue thinking...`}
               </div>
+              )
+              }
+              
               <div className="score blue">{this.props.G.scores[1]}</div>
             </div>
           <ProgressBar max={TOTAL_POINTS} style={{ marginBottom: "8px" }}>
@@ -70,7 +76,7 @@ export class Take257Board extends React.Component {
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
-						<div className="square info">{Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1}</div>
+						<div className="square info">{round}</div>
             <div className="slash">/</div>
 						<div className="square info">{24}</div>
 						<div className="square info">{phase}</div>
@@ -97,7 +103,7 @@ export class Take257Board extends React.Component {
           </LineChart>
           <div style={{width: "500px"}}>
           <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. 
-          Your goal is to capture the majority of them by selecting groups of squares over 36 rounds. 
+          Your goal is to capture the majority of them by selecting groups of squares over 24 rounds. 
           You can lock a square by getting 9 points above the other player. Any square outside of your selection loses you a point.
           First player rotates every round.
           </div>

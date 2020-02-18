@@ -153,4 +153,10 @@ path {
 }
 .info-text {
   text-align: center;
+  font-weight: 700;
+}
+.score-text {
+  font-size: 10px;
+  text-align: center;
+  width: 105px;
 }
