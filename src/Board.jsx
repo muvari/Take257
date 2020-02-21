@@ -1,7 +1,7 @@
 import React from 'react';
-import { Square } from './Square';
+import Square from './Square';
 
-export class Board extends React.Component {
+class Board extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,27 +12,30 @@ export class Board extends React.Component {
 
     this.changeHoveredCell = this.changeHoveredCell.bind(this);
   }
-
+  
+  changeHoveredCell = (i) => {
+    this.setState({hoveredCell: i})
+  }
+  
 	renderSquare(i) {
+    const { G, moves, ctx, setInfoText } = this.props;
+    const { hoveredCell } = this.state;
+
 		return (
 			<Square
         id={i}
         key={i}
-        value={this.props.G.gridValues[i]}
-        score={this.props.G.gridScores[i]}
-        selectedCell={this.props.G.selectedCell}
-        lastSelected={this.props.G.lastSelected}
-        hoveredCell={this.state.hoveredCell}
-        moves={this.props.moves}
-        ctx={this.props.ctx}
+        value={G.gridValues[i]}
+        score={G.gridScores[i]}
+        selectedCell={G.selectedCell}
+        lastSelected={G.lastSelected}
+        hoveredCell={hoveredCell}
+        moves={moves}
+        ctx={ctx}
         onHover={this.changeHoveredCell}
-        setInfoText={this.props.setInfoText}
+        setInfoText={setInfoText}
 			/>
 		);
-  }
-  
-  changeHoveredCell = (i) => {
-    this.setState({hoveredCell: i})
   }
 
 	render() {
@@ -50,3 +53,5 @@ export class Board extends React.Component {
 		);
 	}
 }
+
+export default Board;

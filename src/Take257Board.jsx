@@ -4,12 +4,12 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts';
 import { BounceLoader } from 'react-spinners';
-import { Board } from './Board';
+import Board from './Board';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 const TOTAL_POINTS = 512;
 
-export class Take257Board extends React.Component {
+class Take257Board extends React.Component {
 
   constructor(props) {
     super(props);
@@ -114,3 +114,5 @@ export class Take257Board extends React.Component {
 		);
 	}
 }
+
+export default Take257Board;

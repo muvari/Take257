@@ -6,6 +6,10 @@ const MAX_REGION = 102;
 const NUM_OF_TURNS = 24;
 const SQUARES = 64;
 
+const randomIntFromInterval = (ctx, min, max) => {
+  return Math.floor(ctx.random.Number() * (max - min + 1) + min);
+}
+
 const randomRowTotal = (ctx) => {
   let rowTotals = [];
   rowTotals[7] = 0;
@@ -42,11 +46,6 @@ const randomSquareTotal = (ctx, max) => {
   }
 
   return squareTotals;
-}
-
-
-const randomIntFromInterval = (ctx, min, max) => {
-  return Math.floor(ctx.random.Number() * (max - min + 1) + min);
 }
 
 export const setupGridValues = (ctx) => {
@@ -160,24 +159,12 @@ const boxClick = (G, ctx, i) => {
   } 
 }
 
-const clickCell = (G, ctx, i) => {
-  if (G.selectedCell === i)
-    return;
-
-  if (ctx.phase === "row")
-    rowClick(G, ctx, i);
-  else if (ctx.phase === "column")
-    columnClick(G, ctx, i);
-  else if (ctx.phase === "box")
-    boxClick(G, ctx, i);  
-
-  G.selectedCell = i;
-  G.lastSelected = ctx.playOrderPos;
-  getCurrentScores(G, ctx);
-}
-
 
 const winningPlayer = (array) => array.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+
+export const isLockedSquare = (score) => {
+  return (Math.abs(score[1] - score[0]) >= 9);
+}
 
 const getCurrentScores = (G, ctx) => {
   const scores = Array(ctx.numPlayers).fill(0);
@@ -198,11 +185,23 @@ const getCurrentScores = (G, ctx) => {
   G.lockedScores = lockedScores;
 }
 
-export const isLockedSquare = (score) => {
-  return (Math.abs(score[1] - score[0]) >= 9);
+const clickCell = (G, ctx, i) => {
+  if (G.selectedCell === i)
+    return;
+
+  if (ctx.phase === "row")
+    rowClick(G, ctx, i);
+  else if (ctx.phase === "column")
+    columnClick(G, ctx, i);
+  else if (ctx.phase === "box")
+    boxClick(G, ctx, i);  
+
+  G.selectedCell = i;
+  G.lastSelected = ctx.playOrderPos;
+  getCurrentScores(G, ctx);
 }
 
-const onPhaseEnd = (G, ctx) => {
+const onPhaseEnd = (G) => {
   // G.selectedCell = undefined;
   G.history.push({name: `Rd ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
@@ -226,7 +225,7 @@ export const Take257 = {
   turn: {
     moveLimit: 1,
     order: {
-      first: (G, ctx) => (parseInt(ctx.turn/ctx.numPlayers) % ctx.numPlayers),
+      first: (G, ctx) => (parseInt(ctx.turn/ctx.numPlayers, 10) % ctx.numPlayers),
       next: (G, ctx) => {
         if ((ctx.turn + 1) % ctx.numPlayers < ctx.numPlayers - 1)
           return (ctx.playOrderPos + 1) % ctx.numPlayers;
@@ -262,7 +261,7 @@ export const Take257 = {
   },
 
   ai: {
-    enumerate: (G, ctx) => {
+    enumerate: (G) => {
       const moves = [];
       for (let i = 0; i < 64; i++) {
         if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;

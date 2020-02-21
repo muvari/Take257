@@ -28,9 +28,8 @@ const BLUE_CODES = [
 
 const TEAM_LABELS = ["Red", "Blue"];
 
-export class Square extends React.Component {
+class Square extends React.Component {
   
-
 	setTextColor() {
 		if (this.isLockedSquare())
 			return 'white';
@@ -56,34 +55,7 @@ export class Square extends React.Component {
       return Math.min(this.props.score[0] - this.props.score[1], 9);
     return Math.min(this.props.score[1] - this.props.score[0], 9);
   }
-
-  isLockedSquare() {
-    return (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
-  }
-
-  isSelectable() {
-    return !this.isLockedSquare() && this.props.selectedCell !== this.props.id;
-  }
-
-  squareLabel() {
-    return `Square ${this.props.id}: ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}${this.isLockedSquare() ? "*" : ""}`;
-  }
   
-  setBackgroundColor() {   
-    if (this.props.score[0] === this.props.score[1])
-      return 'white';
-    if (this.getWinningPlayer() === 0)
-      return RED_CODES[this.getNetScore()];
-    return BLUE_CODES[this.getNetScore()];
-  }
-
-  onClick = () => {
-    if (this.isSelectable()) {
-      this.props.moves.clickCell(this.props.id);
-      this.props.onHover(undefined);
-    }
-  }
-
   getShadowClass = () => {
     if (this.isSelectable() && this.props.hoveredCell === this.props.id)
       return "red-big-hover";
@@ -140,10 +112,39 @@ export class Square extends React.Component {
         return "red-hover";
     }
   }
+  
+  setBackgroundColor() {   
+    if (this.props.score[0] === this.props.score[1])
+      return 'white';
+    if (this.getWinningPlayer() === 0)
+      return RED_CODES[this.getNetScore()];
+    return BLUE_CODES[this.getNetScore()];
+  }
+
+  onClick = () => {
+    if (this.isSelectable()) {
+      this.props.moves.clickCell(this.props.id);
+      this.props.onHover(undefined);
+    }
+  }
+  
+  squareLabel() {
+    return `Square ${this.props.id}: ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}${this.isLockedSquare() ? "*" : ""}`;
+  }
+  
+  isSelectable() {
+    return !this.isLockedSquare() && this.props.selectedCell !== this.props.id;
+  }
+
+  
+  isLockedSquare() {
+    return (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
+  }
 
 	render() {
 		return (
       <button key={this.props.id} 
+        type="button"
         className={`square ${this.getShadowClass()}`}
         onClick={this.onClick}
         onMouseEnter={() => { 
@@ -156,3 +157,5 @@ export class Square extends React.Component {
 		)
 	}
 }
+
+export default Square;
