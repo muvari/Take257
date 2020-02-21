@@ -34,8 +34,7 @@ export class Square extends React.Component {
 	setTextColor() {
 		if (this.isLockedSquare())
 			return 'white';
-		else
-			return 'black';
+		return 'black';
   }
 
   getWinningPlayer() {
@@ -55,8 +54,7 @@ export class Square extends React.Component {
       return '';
     if (this.getWinningPlayer() === 0)
       return Math.min(this.props.score[0] - this.props.score[1], 9);
-    else
-      return Math.min(this.props.score[1] - this.props.score[0], 9);
+    return Math.min(this.props.score[1] - this.props.score[0], 9);
   }
 
   isLockedSquare() {
@@ -76,8 +74,7 @@ export class Square extends React.Component {
       return 'white';
     if (this.getWinningPlayer() === 0)
       return RED_CODES[this.getNetScore()];
-    else
-      return BLUE_CODES[this.getNetScore()];
+    return BLUE_CODES[this.getNetScore()];
   }
 
   onClick = () => {
@@ -90,15 +87,15 @@ export class Square extends React.Component {
   getShadowClass = () => {
     if (this.isSelectable() && this.props.hoveredCell === this.props.id)
       return "red-big-hover";
-    else if (this.props.selectedCell === this.props.id)
+    if (this.props.selectedCell === this.props.id)
       return this.props.lastSelected === 1 ? "blue-big-hover" : "red-big-hover";
 
     if (!this.isSelectable()) return;
     if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
       return "red-hover";
-    else if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
+    if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
       return "red-hover";
-    else if (this.props.ctx.phase === "box") {
+    if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;
       const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
       if (i % 8 === 0) { 

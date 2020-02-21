@@ -1,9 +1,9 @@
 import React from 'react';
 import { Client } from 'boardgame.io/react';
-import { Take257 } from './Take257';
-import { Take257Board } from './Take257Board';
 import { Local } from 'boardgame.io/multiplayer';
 import { MCTSBot } from 'boardgame.io/ai';
+import { Take257 } from './Take257';
+import { Take257Board } from './Take257Board';
 
 class CustomBot extends MCTSBot {
   constructor(ai) {

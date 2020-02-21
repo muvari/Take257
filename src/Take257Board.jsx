@@ -1,10 +1,10 @@
 import React from 'react';
-import { Board } from './Board';
 import { ProgressBar } from 'react-bootstrap';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
 } from 'recharts';
 import { BounceLoader } from 'react-spinners';
+import { Board } from './Board';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 const TOTAL_POINTS = 512;
@@ -28,9 +28,9 @@ export class Take257Board extends React.Component {
 	render() {
     let status;
 		if (this.props.ctx.gameover && this.props.ctx.gameover.winner) {
-			status = "Winner: " + this.props.ctx.gameover.winner;
+			status = `Winner: ${  this.props.ctx.gameover.winner}`;
 		} else {
-			status = "Round: " + (this.props.ctx.playOrderPos === 0 ? "Red" : "Blue");
+			status = `Round: ${  this.props.ctx.playOrderPos === 0 ? "Red" : "Blue"}`;
     }
 
     const round = Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1;
@@ -38,13 +38,13 @@ export class Take257Board extends React.Component {
     
     let phase;
     if (this.props.ctx.phase === "row")
-      phase = <i className="fas fa-arrows-alt-h"></i>
+      phase = <i className="fas fa-arrows-alt-h" />
     else if (this.props.ctx.phase === "column")
-      phase = <i className="fas fa-arrows-alt-v"></i>
+      phase = <i className="fas fa-arrows-alt-v" />
     else if (this.props.ctx.phase === "box")
-      phase = <i className="fas fa-th"></i>;
+      phase = <i className="fas fa-th" />;
     
-		return (<React.Fragment>    
+		return (<>    
       <div className="row"><h1 className="info-text">Take 257</h1></div>
 			<div className="game row">
         <div className="game-board">
@@ -55,7 +55,7 @@ export class Take257Board extends React.Component {
                   <BounceLoader
                     css={{margin: "0 auto"}}
                     size={40}
-                    color={"#337ab7"}
+                    color="#337ab7"
                     loading={!this.props.isActive}
                   />
                   {`Rd. ${round}-${turn} Blue thinking...`}
@@ -110,7 +110,7 @@ export class Take257Board extends React.Component {
           </div>
 				</div>
       </div>
-      </React.Fragment>  
+      </>  
 		);
 	}
 }

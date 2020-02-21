@@ -14,7 +14,7 @@ const randomRowTotal = (ctx) => {
     rowTotals = [];
     let sum = 0;
     for (let i = 0; i < 7; i++) {
-      let r = randomIntFromInterval(ctx, MIN_REGION, MAX_REGION);
+      const r = randomIntFromInterval(ctx, MIN_REGION, MAX_REGION);
       rowTotals[i] = r;
       sum += r;
     }
@@ -33,7 +33,7 @@ const randomSquareTotal = (ctx, max) => {
     squareTotals = [];
     let sum = 0;
     for (let i = 0; i < 7; i++) {
-      let r = randomIntFromInterval(ctx, MIN_STATE, MAX_STATE);
+      const r = randomIntFromInterval(ctx, MIN_STATE, MAX_STATE);
       squareTotals[i] = r;
       sum += r;
     }
@@ -53,7 +53,7 @@ export const setupGridValues = (ctx) => {
   const values = [];
   const rowTotals = randomRowTotal(ctx);
 		for (let i = 0; i < 8; i++) {
-			let squareTotals = randomSquareTotal(ctx, rowTotals[i]);
+			const squareTotals = randomSquareTotal(ctx, rowTotals[i]);
 			for (let j = 0; j < 8; j++) {
 				values[8 * i + j] = squareTotals[j];
 			}
@@ -263,7 +263,7 @@ export const Take257 = {
 
   ai: {
     enumerate: (G, ctx) => {
-      let moves = [];
+      const moves = [];
       for (let i = 0; i < 64; i++) {
         if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;
         if (G.gridValues[i] < 10) continue;
