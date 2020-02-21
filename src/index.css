@@ -157,8 +157,9 @@ path {
 }
 .score-text {
   font-size: 10px;
+  font-weight: 700;
   text-align: center;
-  width: 105px;
+  width: 150px;
 }
 line[y1="46.99999999999999"] {
   stroke: #999;

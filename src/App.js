@@ -7,8 +7,16 @@ import Take257Board from './Take257Board';
 
 class CustomBot extends MCTSBot {
   constructor(ai) {
-    ai.iterations = 300;
-    ai.playoutDepth = 48;
+    ai.iterations = 1000;
+    ai.playoutDepth = 4;
+    ai.objectives = () => ({
+      '0': {
+        checker: (G, ctx) => {
+          return (ctx.playOrderPos === 0 && G.scores[1] > G.scores[0])
+        },
+        weight: 1,
+      },
+    });
     super(ai);
   }
 }

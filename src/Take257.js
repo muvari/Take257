@@ -255,8 +255,8 @@ export const Take257 = {
   },
 
   endIf: (G, ctx) => {
-    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.turn % ctx.numPlayers === 1 && G.scores[ctx.playOrderPos] > TOTAL_POINTS / 2 ) {
-      return { winner: G.scores[0] > G.scores[1] ? "0" : "1" };
+    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.playOrderPos === 0 && G.scores[ctx.playOrderPos] > TOTAL_POINTS / 2 ) {
+      return { winner: G.scores[0] > G.scores[1] ? "Red Wins!" : "Blue Wins!" };
     }
   },
 
