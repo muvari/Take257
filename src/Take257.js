@@ -114,7 +114,6 @@ const changeScore = (G, ctx, i, num) => {
 }
 
 const rowClick = (G, ctx, i) => {
-
   const row = Math.floor(i / 8);
   const rowIndecies = [];
   for (let j = 0; j < 8; j++) {

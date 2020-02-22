@@ -31,25 +31,21 @@ const TEAM_LABELS = ["Red", "Blue"];
 
 class Square extends React.Component {
   
-	setTextColor() {
-		if (this.isLockedSquare())
-			return 'white';
-		return 'black';
-  }
+	setTextColor = () => (this.isLockedSquare() ? 'white' : 'black');
 
-  getWinningPlayer() {
+  getWinningPlayer = () => {
     if (this.props.score[0] === this.props.score[1])
       return undefined;
     return this.props.score.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
   }
 
-  getWinningLabel(index) {
+  getWinningLabel = (index) => {
     if (index === undefined)
       return "Draw";
     return TEAM_LABELS[index];
   }
 
-  getNetScore() {
+  getNetScore = () => {
     if (this.props.score[0] === this.props.score[1])
       return '';
     if (this.getWinningPlayer() === 0)
@@ -76,7 +72,7 @@ class Square extends React.Component {
     }
   }
   
-  setBackgroundColor() {   
+  setBackgroundColor = () => {   
     if (this.props.score[0] === this.props.score[1])
       return 'white';
     if (this.getWinningPlayer() === 0)
@@ -91,24 +87,18 @@ class Square extends React.Component {
     }
   }
   
-  squareLabel() {
-    return { square: this.props.id,
-             leader: this.getWinningLabel(this.getWinningPlayer()),
-             net: this.getNetScore(),
-             isLocked: this.isLockedSquare(),
-             red: this.props.score[0],
-             blue: this.props.score[1]
-            }
-  }
+  squareLabel = () => ({ 
+            square: this.props.id,
+            leader: this.getWinningLabel(this.getWinningPlayer()),
+            net: this.getNetScore(),
+            isLocked: this.isLockedSquare(),
+            red: this.props.score[0],
+            blue: this.props.score[1]
+            });
   
-  isSelectable() {
-    return !this.isLockedSquare() && this.props.selectedCell !== this.props.id;
-  }
-
+  isSelectable = () => (!this.isLockedSquare() && this.props.selectedCell !== this.props.id);
   
-  isLockedSquare() {
-    return (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
-  }
+  isLockedSquare = () => (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
 
 	render() {
 		return (
