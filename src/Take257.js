@@ -37,9 +37,11 @@ const randomSquareTotal = (ctx, max) => {
     squareTotals = [];
     let sum = 0;
     for (let i = 0; i < 7; i++) {
-      const r = randomIntFromInterval(ctx, MIN_STATE, MAX_STATE);
+      const r = randomIntFromInterval(ctx, MIN_STATE, Math.min(max - 7, MAX_STATE));
       squareTotals[i] = r;
       sum += r;
+      if (sum > max)
+        break;
     }
 
     squareTotals[7] = max - sum;
@@ -201,9 +203,14 @@ const clickCell = (G, ctx, i) => {
   getCurrentScores(G, ctx);
 }
 
-const onPhaseEnd = (G) => {
+const onPhaseEnd = (G, ctx) => {
   // G.selectedCell = undefined;
   G.history.push({name: `Rd ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
+
+  if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2)))
+    ctx.events.endGame({ winner: G.scores[0] > G.scores[1] ? "Red Wins!" : "Blue Wins!" });
+  if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === 256 && G.lockedScores[1] === 256 )
+    ctx.events.endGame({ winner: "Draw" });
 }
 
 export const Take257 = {
@@ -252,12 +259,6 @@ export const Take257 = {
       next: 'row',
       onEnd: onPhaseEnd
     },
-  },
-
-  endIf: (G, ctx) => {
-    if (ctx.turn >= NUM_OF_TURNS * 2 && ctx.playOrderPos === 0 && G.scores[ctx.playOrderPos] > TOTAL_POINTS / 2 ) {
-      return { winner: G.scores[0] > G.scores[1] ? "Red Wins!" : "Blue Wins!" };
-    }
   },
 
   ai: {

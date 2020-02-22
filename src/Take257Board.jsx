@@ -50,7 +50,11 @@ class Take257Board extends React.Component {
         <div className="game-board">
           <div className="score-board">
               <div className="score red">{this.props.G.scores[0]}</div>
-              { this.props.isActive || this.props.ctx.gameover ? (<div className="score-text" style={{ marginTop: "40px" }}>{`Rd. ${round}-${turn}  - Your turn`}</div>) : (
+              { this.props.isActive || this.props.ctx.gameover ? 
+                (<div 
+                  className={this.props.ctx.gameover ? 'win-text' : 'score-text'} 
+                  style={this.props.ctx.gameover ? {} : { marginTop: "40px" }}>
+                  {this.props.ctx.gameover ? this.props.ctx.gameover.winner : `Rd. ${round}-${turn}  - Your turn`}</div>) : (
                 <div className="loading score-text">
                   <BounceLoader
                     css={{margin: "0 auto"}}
@@ -61,8 +65,7 @@ class Take257Board extends React.Component {
                   {`Rd. ${round}-${turn} Blue thinking...`}
               </div>
               )
-              }
-              
+              }              
               <div className="score blue">{this.props.G.scores[1]}</div>
             </div>
           <ProgressBar max={TOTAL_POINTS} style={{ marginBottom: "8px" }}>
@@ -89,11 +92,11 @@ class Take257Board extends React.Component {
 					</div>
           <div className="row">
 						<h3 className="col-12" style={{ textAlign: 'center' }}>Locked Points</h3>
-						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.lockedScores[0]}</div>
+						<div className="square info" style={{ background: '#c9302c', color: 'white', marginBottom: "8px" }}>{this.props.G.lockedScores[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
 					</div>
           <LineChart width={500} height={250} data={this.props.G.history} margin={{
-            top: 5, right: 30, left: 20, bottom: 5,
+            top: 5, right: 30, left: 5, bottom: 5,
           }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
@@ -102,11 +105,12 @@ class Take257Board extends React.Component {
             <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
           </LineChart>
-          <div style={{width: "500px"}}>
+          <div style={{width: "500px", marginLeft: "-8px"}}>
           <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. 
-          Your goal is to capture the majority of them by selecting groups of squares over 24 rounds. 
-          You can lock a square by getting 9 points above the other player. Any square outside of your selection loses you a point.
-          First player rotates every round.
+          Capture over 256 by holding more visit points per square than the other player. 
+          A Square visited gains you 3 visit points (2 for box selection). Squares in the group gain 1 point. 
+          All unvisited lose you 1 point. 
+          You can lock a square by gaining 9 visit points over the other player.
           </div>
 				</div>
       </div>

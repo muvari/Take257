@@ -8,15 +8,11 @@ import Take257Board from './Take257Board';
 class CustomBot extends MCTSBot {
   constructor(ai) {
     ai.iterations = 1000;
-    ai.playoutDepth = (G, ctx) => {
-      if (ctx.turn <= 44)
-        return 4;
-      return ctx.playOrderPos === 0 ? 2 : 1;
-    };
+    ai.playoutDepth = (G, ctx) => (ctx.turn <= 44 ? 4 : 2);
     ai.objectives = () => ({
       '0': {
         checker: (G, ctx) => {
-          return (ctx.playOrderPos === 0 && G.scores[1] > G.scores[0])
+          return ((ctx.turn % ctx.numPlayers === 1) && G.scores[1] > G.scores[0])
         },
         weight: 1,
       },
@@ -28,7 +24,7 @@ class CustomBot extends MCTSBot {
 const Take257Client = Client({ 
   game: Take257, 
   board: Take257Board, 
-  debug: true, 
+  debug: false, 
   numPlayers: 2,
   multiplayer: Local({
     bots: {

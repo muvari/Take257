@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-	background: #fbfbfc;
+  background: #fbfbfc;
+  min-width: 500px;
 }
 footer {
   border-top: 1px solid #999;
@@ -83,6 +84,17 @@ ol, ul {
   padding: 0;
   text-align: center;
   width: 60px;
+}
+.info {
+  min-width: 60px;
+  width: initial;
+  line-height: 58px;
+}
+.win-text {
+  width: 150px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 60px;
 }
 
 .square:focus {
