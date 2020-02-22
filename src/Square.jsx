@@ -1,4 +1,5 @@
 import React from 'react';
+import { getBoxIndecies } from './Take257';
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -69,45 +70,7 @@ class Square extends React.Component {
       return "red-hover";
     if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;
-      const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
-      if (i % 8 === 0) { 
-        // Remove left column       
-        let j = boxIndecies.indexOf(i-9);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i-1);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i+7);
-        if (j > -1) boxIndecies.splice(j, 1);
-      }
-      if (i % 8 === 7) { 
-        // Remove right column       
-        let j = boxIndecies.indexOf(i-7);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i+1);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i+9);
-        if (j > -1) boxIndecies.splice(j, 1);
-      }
-      if (Math.floor(i / 8) === 0) {
-        // Remove top row       
-        let j = boxIndecies.indexOf(i-9);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i-8);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i-7);
-        if (j > -1) boxIndecies.splice(j, 1);
-      }
-      if (Math.floor(i / 8) === 7) {
-        // Remove bottom row       
-        let j = boxIndecies.indexOf(i+9);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i+8);
-        if (j > -1) boxIndecies.splice(j, 1);
-        j = boxIndecies.indexOf(i+7);
-        if (j > -1) boxIndecies.splice(j, 1);
-      }
-
-
+      const boxIndecies = getBoxIndecies(i);
       if (boxIndecies.indexOf(this.props.id) > -1)
         return "red-hover";
     }

@@ -64,6 +64,47 @@ export const setupGridValues = (ctx) => {
 
 export const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toString();
 
+export const getBoxIndecies = (i) => {
+  const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
+  if (i % 8 === 0) { 
+    // Remove left column       
+    let j = boxIndecies.indexOf(i-9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-1);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (i % 8 === 7) { 
+    // Remove right column       
+    let j = boxIndecies.indexOf(i-7);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+1);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+9);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (Math.floor(i / 8) === 0) {
+    // Remove top row       
+    let j = boxIndecies.indexOf(i-9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-8);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i-7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  if (Math.floor(i / 8) === 7) {
+    // Remove bottom row       
+    let j = boxIndecies.indexOf(i+9);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+8);
+    if (j > -1) boxIndecies.splice(j, 1);
+    j = boxIndecies.indexOf(i+7);
+    if (j > -1) boxIndecies.splice(j, 1);
+  }
+  return boxIndecies;
+}
+
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
   if (currentMargin >= 9)
@@ -113,43 +154,8 @@ const validNum = (num) => {
   return num >= 0 && num < 64;
 }
 const boxClick = (G, ctx, i) => { 
-  const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9, i];
-  if (i % 8 === 0) { 
-    // Remove left column       
-    let j = boxIndecies.indexOf(i-9);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i-1);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+7);
-    if (j > -1) boxIndecies.splice(j, 1);
-  }
-  if (i % 8 === 7) { 
-    // Remove right column       
-    let j = boxIndecies.indexOf(i-7);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+1);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+9);
-    if (j > -1) boxIndecies.splice(j, 1);
-  }
-  if (Math.floor(i / 8) === 0) {
-    // Remove top row       
-    let j = boxIndecies.indexOf(i-9);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i-8);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i-7);
-    if (j > -1) boxIndecies.splice(j, 1);
-  }
-  if (Math.floor(i / 8) === 7) {
-    // Remove bottom row       
-    let j = boxIndecies.indexOf(i+9);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+8);
-    if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+7);
-    if (j > -1) boxIndecies.splice(j, 1);
-  }
+  const boxIndecies = getBoxIndecies(i);
+  boxIndecies.push(i);
 
   for (let j = 0; j < SQUARES; j++) {
     if (j === i) {
@@ -204,7 +210,6 @@ const clickCell = (G, ctx, i) => {
 }
 
 const onPhaseEnd = (G, ctx) => {
-  // G.selectedCell = undefined;
   G.history.push({name: `Rd ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 
   if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2)))

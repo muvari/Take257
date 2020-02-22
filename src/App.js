@@ -8,7 +8,7 @@ import Take257Board from './Take257Board';
 class CustomBot extends MCTSBot {
   constructor(ai) {
     ai.iterations = 1000;
-    ai.playoutDepth = (G, ctx) => (ctx.turn <= 44 ? 4 : 2);
+    ai.playoutDepth = 4;
     ai.objectives = () => ({
       '0': {
         checker: (G, ctx) => {
