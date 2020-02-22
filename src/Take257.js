@@ -218,12 +218,13 @@ const getEndGameMessage = (G) => {
 }
 
 const onPhaseEnd = (G, ctx) => {
-  G.history.push({name: `Rd ${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
-
   if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2)))
     ctx.events.endGame(getEndGameMessage(G));
   if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === 256 && G.lockedScores[1] === 256 )
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
+
+  if (!ctx.gameover)
+    G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 
 export const Take257 = {

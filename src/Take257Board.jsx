@@ -116,11 +116,13 @@ class Take257Board extends React.Component {
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
           </LineChart>
           <div style={{width: "500px", marginLeft: "-8px"}}>
-          <span style={{fontWeight: "700"}}>Directions: </span>There are 512 points in the grid. 
-          Capture over 256 by holding more visit points per square than the other player. 
-          A Square visited gains you 3 visit points (2 for box selection). Squares in the group gain 1 point. 
-          All unvisited lose you 1 point. 
-          You can lock a square by gaining 9 visit points over the other player.
+          <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are 512 points in the grid. 
+          Your goal is to capture a majority by holding more "visit points" per square than the other player.`}
+          </p> 
+          <p>{`Clicking a square: +3 visit points (+2 in box selection rounds). 
+          Adjacent squares:  +1 point. 
+          Remaining Unvisited: -1 point. 
+          Net +9 visit points locks the square.`}</p>
           </div>
 				</div>
       </div>
