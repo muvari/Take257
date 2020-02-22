@@ -265,7 +265,6 @@ export const Take257 = {
       const moves = [];
       for (let i = 0; i < 64; i++) {
         if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;
-        if (G.gridValues[i] < 10) continue;
         moves.push({ move: 'clickCell', args: [i] });
       }
       return moves;
