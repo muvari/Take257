@@ -1,31 +1,9 @@
 import React from 'react';
 import { Client } from 'boardgame.io/react';
 import { Local } from 'boardgame.io/multiplayer';
-import { MCTSBot } from 'boardgame.io/ai';
 import { Take257 } from './Take257';
 import Take257Board from './Take257Board';
-
-class CustomBot extends MCTSBot {
-  constructor(ai) {
-    ai.iterations = 1000;
-    ai.playoutDepth = 4;
-    ai.objectives = () => ({
-      '0': {
-        checker: (G, ctx) => {
-          return ((ctx.turn % ctx.numPlayers === 1) && G.scores[1] > G.scores[0])
-        },
-        weight: 1,
-      },
-      '1': {
-        checker: (G, ctx) => {
-          return (ctx.turn >= 48 && (ctx.turn % ctx.numPlayers === 1) && G.scores[1] > 256)
-        },
-        weight: 10,
-      },
-    });
-    super(ai);
-  }
-}
+import CustomBot from './CustomBot';
 
 const Take257Client = Client({ 
   game: Take257, 
