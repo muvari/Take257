@@ -27,8 +27,8 @@ class Take257Board extends React.Component {
 
 	render() {
     let status;
-		if (this.props.ctx.gameover && this.props.ctx.gameover.winner) {
-			status = `Winner: ${  this.props.ctx.gameover.winner}`;
+		if (this.props.ctx.gameover && this.props.ctx.gameover.message) {
+			status = `Winner: ${  this.props.ctx.gameover.message}`;
 		} else {
 			status = `Round: ${  this.props.ctx.playOrderPos === 0 ? "Red" : "Blue"}`;
     }
@@ -58,7 +58,7 @@ class Take257Board extends React.Component {
                 (<div 
                   className={this.props.ctx.gameover ? 'win-text' : 'score-text'} 
                   style={this.props.ctx.gameover ? {} : { marginTop: "40px" }}>
-                  {this.props.ctx.gameover ? this.props.ctx.gameover.winner : `Rd. ${round}-${turn}  - Your turn`}</div>) : (
+                  {this.props.ctx.gameover ? this.props.ctx.gameover.message : `Rd. ${round}-${turn}  - Your turn`}</div>) : (
                 <div className="loading score-text">
                   <BounceLoader
                     css={{margin: "0 auto"}}
