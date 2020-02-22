@@ -92,7 +92,13 @@ class Square extends React.Component {
   }
   
   squareLabel() {
-    return `Square ${this.props.id}: \n ${this.getWinningLabel(this.getWinningPlayer())} ${this.getNetScore()}${this.isLockedSquare() ? "*" : ""}`;
+    return { square: this.props.id,
+             leader: this.getWinningLabel(this.getWinningPlayer()),
+             net: this.getNetScore(),
+             isLocked: this.isLockedSquare(),
+             red: this.props.score[0],
+             blue: this.props.score[1]
+            }
   }
   
   isSelectable() {

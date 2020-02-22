@@ -167,6 +167,9 @@ path {
   text-align: center;
   font-weight: 700;
 }
+.info-text-extra {
+  text-align: center;
+}
 .score-text {
   font-size: 10px;
   font-weight: 700;

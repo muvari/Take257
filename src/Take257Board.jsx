@@ -15,7 +15,7 @@ class Take257Board extends React.Component {
     super(props);
 
     this.state = {
-      infoText: ""
+      infoText: { leader: "Draw", square: -1, net: 0, red: 0, blue: 0, isLocked: false }
     }
 
     this.setInfoText = this.setInfoText.bind(this);
@@ -43,7 +43,11 @@ class Take257Board extends React.Component {
       phase = <i className="fas fa-arrows-alt-v" />
     else if (this.props.ctx.phase === "box")
       phase = <i className="fas fa-th" />;
-    
+
+    const { infoText } = this.state;
+    const squareTitle = infoText.square === -1 ? "" : `Square ${infoText.square}`;
+    const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
+    const extraInfoText = infoText.square === -1 ? "" : `Red ${infoText.red + (round - 1)} Blue ${infoText.blue + (round - 1)}`
 		return (<>    
       <div className="row"><h1 className="info-text">Take 257</h1></div>
 			<div className="game row">
@@ -74,7 +78,13 @@ class Take257Board extends React.Component {
 					</ProgressBar>
           <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} setInfoText={this.setInfoText} />
           <div className="info-text">
-            {this.state.infoText}
+            {squareTitle}
+          </div>
+          <div className="info-text">
+            {squareInfoText}
+          </div>
+          <div className="info-text-extra">
+            {extraInfoText}
           </div>
         </div>
         <div className="game-info col-6">
