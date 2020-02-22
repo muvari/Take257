@@ -16,6 +16,12 @@ class CustomBot extends MCTSBot {
         },
         weight: 1,
       },
+      '1': {
+        checker: (G, ctx) => {
+          return (ctx.turn >= 48 && (ctx.turn % ctx.numPlayers === 1) && G.scores[1] > 256)
+        },
+        weight: 10,
+      },
     });
     super(ai);
   }
