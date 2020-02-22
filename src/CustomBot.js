@@ -22,15 +22,18 @@ class CustomBot extends MCTSBot {
 
     if (result.score !== undefined) {
       node.value += result.score;
+      if (result.score > 256)
+        node.value += 256;
     }
 
     if (result.draw === true) {
-      node.value += 500;
+      node.value += 50;
     }
 
-    if (node.parentAction && result.winner === "1") {
-      node.value += 1000;
-    }
+    // Seems to sabotage itself with this?
+    // if (node.parentAction && result.winner === "0") {
+    //   node.value += 10000;
+    // }
 
     if (node.parent) {
       this.backpropagate(node.parent, result);
