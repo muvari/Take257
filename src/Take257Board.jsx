@@ -63,10 +63,10 @@ class Take257Board extends React.Component {
                   <BounceLoader
                     css={{margin: "0 auto"}}
                     size={40}
-                    color={this.props.playerID === 0 ? "#337ab7" : "#c9302c"}
+                    color={this.props.playerID === "0" ? "#337ab7" : "#c9302c"}
                     loading={!this.props.isActive}
                   />
-                  {`Round ${round}-${turn} ${this.props.playerID === 0 ? "Blue" : "Red"} thinking...`}
+                  {`Round ${round}-${turn} ${this.props.playerID === "0" ? "Blue" : "Red"} thinking...`}
               </div>
               )
               }              
