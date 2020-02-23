@@ -58,15 +58,15 @@ class Take257Board extends React.Component {
                 (<div 
                   className={this.props.ctx.gameover ? 'win-text' : 'score-text'} 
                   style={this.props.ctx.gameover ? {} : { marginTop: "40px" }}>
-                  {this.props.ctx.gameover ? this.props.ctx.gameover.message : `Rd. ${round}-${turn}  - Your turn`}</div>) : (
+                  {this.props.ctx.gameover ? this.props.ctx.gameover.message : `Round ${round}-${turn}  - Your turn`}</div>) : (
                 <div className="loading score-text">
                   <BounceLoader
                     css={{margin: "0 auto"}}
                     size={40}
-                    color="#337ab7"
+                    color={this.props.playerID === 0 ? "#337ab7" : "#c9302c"}
                     loading={!this.props.isActive}
                   />
-                  {`Rd. ${round}-${turn} Blue thinking...`}
+                  {`Round ${round}-${turn} ${this.props.playerID === 0 ? "Blue" : "Red"} thinking...`}
               </div>
               )
               }              
@@ -90,10 +90,10 @@ class Take257Board extends React.Component {
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
+						<div className="square info">{phase}</div>
 						<div className="square info">{round}</div>
             <div className="slash">/</div>
 						<div className="square info">{24}</div>
-						<div className="square info">{phase}</div>
 					</div>
 					<div className="row">
 						<h3 className="col-12" style={{ textAlign: 'center' }}># of Squares</h3>
@@ -117,12 +117,11 @@ class Take257Board extends React.Component {
           </LineChart>
           <div style={{width: "500px", marginLeft: "-8px"}}>
           <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are 512 points in the grid. 
-          Your goal is to capture a majority by holding more "visit points" per square than the other player.`}
+          Your goal is to capture a majority by visiting each square more than the other player.`}
           </p> 
           <p>{`Clicking a square: +3 visit points (+2 in box selection rounds). 
-          Adjacent squares:  +1 point. 
-          Remaining Unvisited: -1 point. 
-          Net +9 visit points locks the square.`}</p>
+          Neighboring squares:  +1 point. 
+          Unvisited squares: -1 point.`}</p>
           </div>
 				</div>
       </div>
