@@ -76,7 +76,7 @@ class Take257Board extends React.Component {
             <ProgressBar max={TOTAL_POINTS} bsPrefix="red" now={this.props.G.scores[0]} key={1} />
             <ProgressBar max={TOTAL_POINTS} bsPrefix="blue" now={this.props.G.scores[1]} key={2} />
 					</ProgressBar>
-          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} setInfoText={this.setInfoText} />
+          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} setInfoText={this.setInfoText} playerId={this.props.playerID} />
           <div className="info-text">
             {squareTitle}
           </div>

@@ -29,6 +29,10 @@ const BLUE_CODES = [
 
 const TEAM_LABELS = ["Red", "Blue"];
 
+const BIG_HOVER_CLASS = ["red-big-hover", "blue-big-hover"];
+
+const HOVER_CLASS = ["red-hover", "blue-hover"];
+
 class Square extends React.Component {
   
 	setTextColor = () => (this.isLockedSquare() ? 'white' : 'black');
@@ -55,20 +59,20 @@ class Square extends React.Component {
   
   getShadowClass = () => {
     if (this.isSelectable() && this.props.hoveredCell === this.props.id)
-      return "red-big-hover";
+      return BIG_HOVER_CLASS[this.props.playerId];
     if (this.props.selectedCell === this.props.id)
-      return this.props.lastSelected === 1 ? "blue-big-hover" : "red-big-hover";
+      return BIG_HOVER_CLASS[this.props.lastSelected];
 
     if (!this.isSelectable()) return;
     if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
-      return "red-hover";
+      return HOVER_CLASS[this.props.playerId];
     if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
-      return "red-hover";
+      return HOVER_CLASS[this.props.playerId];
     if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;
       const boxIndecies = getBoxIndecies(i);
       if (boxIndecies.indexOf(this.props.id) > -1)
-        return "red-hover";
+        return HOVER_CLASS[this.props.playerId];
     }
   }
   

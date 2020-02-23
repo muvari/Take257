@@ -18,7 +18,7 @@ class Board extends React.Component {
   }
   
 	renderSquare(i) {
-    const { G, moves, ctx, setInfoText } = this.props;
+    const { G, moves, ctx, setInfoText, playerId } = this.props;
     const { hoveredCell } = this.state;
 
 		return (
@@ -34,6 +34,7 @@ class Board extends React.Component {
         ctx={ctx}
         onHover={this.changeHoveredCell}
         setInfoText={setInfoText}
+        playerId={playerId}
 			/>
 		);
   }
