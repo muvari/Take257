@@ -122,6 +122,7 @@ class Take257Board extends React.Component {
           <p>{`Clicking a square: +3 visit points (+2 in box selection rounds). 
           Neighboring squares:  +1 point. 
           Unvisited squares: -1 point.`}</p>
+          <p>Minimum 24 Rounds. Your color is randomized.</p>
           </div>
 				</div>
       </div>
