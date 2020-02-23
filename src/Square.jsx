@@ -82,6 +82,7 @@ class Square extends React.Component {
 
   onClick = () => {
     if (this.isSelectable()) {
+      window.navigator.vibrate(40);
       this.props.moves.clickCell(this.props.id);
       this.props.onHover(undefined);
     }
