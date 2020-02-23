@@ -238,6 +238,14 @@ export const Take257 = {
     history: []
   }),
 
+  playerView: (G, ctx, playerID) => { 
+    if (G && !G.playerID) {
+      G.playerID = playerID; 
+      G.botID = otherPlayer(playerID);
+    }
+    return G;
+  },
+
   moves: {
     clickCell,
   },

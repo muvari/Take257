@@ -7,9 +7,9 @@ class CustomBot extends MCTSBot {
     ai.objectives = (G) => ({
       'better than player 1': {
         checker: (G, ctx) => {
-          return ((ctx.turn % ctx.numPlayers === 1) && G.scores[1] > G.scores[0]);
+          return ((ctx.turn % ctx.numPlayers === 1) && G.scores[G.botID] > G.scores[G.playerID]);
         },
-        weight: (function weight(G){return (G.scores[1] - G.scores[0]);}(G)),
+        weight: (function weight(G){return (G.scores[G.botID] - G.scores[G.playerID]);}(G)),
       },
     });
     super(ai);
