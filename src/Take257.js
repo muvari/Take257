@@ -3,7 +3,7 @@ const MIN_STATE = 1;
 const MAX_STATE = 51;
 const MIN_REGION = 31;
 const MAX_REGION = 102;
-const NUM_OF_TURNS = 24;
+const NUM_OF_TURNS = 30;
 const SQUARES = 64;
 
 const randomIntFromInterval = (ctx, min, max) => {
@@ -217,12 +217,15 @@ const getEndGameMessage = (G) => {
 }
 
 const onPhaseEnd = (G, ctx) => {
-  if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2)))
+  let ended = false;
+  if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2))) {
     ctx.events.endGame(getEndGameMessage(G));
+    ended = true;
+  }
   if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === 256 && G.lockedScores[1] === 256 )
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
 
-  if (!ctx.gameover)
+  if (!ended || !ctx.gameover)
     G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 

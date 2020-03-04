@@ -3,7 +3,7 @@ import { MCTSBot } from 'boardgame.io/ai';
 class CustomBot extends MCTSBot {
   constructor(ai) {
     ai.iterations = 1000;
-    ai.playoutDepth = (G, ctx) => (Math.min(5, Math.max(1, 48 - ctx.turn)));
+    ai.playoutDepth = (G, ctx) => (Math.min(5, Math.max(1, 60 - ctx.turn)));
     ai.objectives = (G) => ({
       'better than player 1': {
         checker: (G, ctx) => {
