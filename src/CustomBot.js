@@ -1,4 +1,5 @@
 import { MCTSBot } from 'boardgame.io/ai';
+import { HALF_POINTS } from './Take257';
 
 class CustomBot extends MCTSBot {
   constructor(ai) {
@@ -22,8 +23,8 @@ class CustomBot extends MCTSBot {
 
     if (result.score !== undefined) {
       node.value += result.score;
-      if (result.score > 256)
-        node.value += 256;
+      if (result.score > HALF_POINTS)
+        node.value += HALF_POINTS;
     }
 
     if (result.draw === true) {

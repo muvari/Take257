@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from './Square';
+import { SIZE } from './Take257';
 
 class Board extends React.Component {
 
@@ -41,14 +42,14 @@ class Board extends React.Component {
 
 	render() {
     const rows = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < SIZE; i++) {
       const squares = [];
-      for (let j = 0; j < 8; j++)
-        squares.push(this.renderSquare((8 * i) + j))
+      for (let j = 0; j < SIZE; j++)
+        squares.push(this.renderSquare((SIZE * i) + j))
       rows.push(<div className="board-row" key={`board${i}`}>{squares}</div>);
     }
 		return (
-			<div>
+			<div style={{ maxWidth: '500px'}}>
 				{rows}
 			</div>
 		);

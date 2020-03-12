@@ -1,10 +1,14 @@
-const TOTAL_POINTS = 512;
-const MIN_STATE = 1;
-const MAX_STATE = 51;
-const MIN_REGION = 31;
-const MAX_REGION = 102;
-const NUM_OF_TURNS = 30;
-const SQUARES = 64;
+export const TOTAL_POINTS = 512;
+export const HALF_POINTS = TOTAL_POINTS / 2;
+export const MIN_STATE = 1;
+export const MAX_STATE = 51;
+export const MIN_REGION = 31;
+export const MAX_REGION = 102;
+export const NUM_OF_TURNS = 30;
+export const SIZE = 7;
+export const SQUARES = SIZE * SIZE;
+export const ZERO_INDEX_SIZE = SIZE - 1;
+export const MAX_MARGIN = 9;
 
 const randomIntFromInterval = (ctx, min, max) => {
   return Math.floor(ctx.random.Number() * (max - min + 1) + min);
@@ -12,18 +16,18 @@ const randomIntFromInterval = (ctx, min, max) => {
 
 const randomRowTotal = (ctx) => {
   let rowTotals = [];
-  rowTotals[7] = 0;
+  rowTotals[ZERO_INDEX_SIZE] = 0;
 
-  while (rowTotals[7] < MIN_REGION || rowTotals[7] > MAX_REGION) {
+  while (rowTotals[ZERO_INDEX_SIZE] < MIN_REGION || rowTotals[ZERO_INDEX_SIZE] > MAX_REGION) {
     rowTotals = [];
     let sum = 0;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < ZERO_INDEX_SIZE; i++) {
       const r = randomIntFromInterval(ctx, MIN_REGION, MAX_REGION);
       rowTotals[i] = r;
       sum += r;
     }
 
-    rowTotals[7] = TOTAL_POINTS - sum;
+    rowTotals[ZERO_INDEX_SIZE] = TOTAL_POINTS - sum;
   }
 
   return rowTotals;
@@ -31,20 +35,20 @@ const randomRowTotal = (ctx) => {
 
 const randomSquareTotal = (ctx, max) => {
   let squareTotals = [];
-  squareTotals[7] = 0;
+  squareTotals[ZERO_INDEX_SIZE] = 0;
 
-  while (squareTotals[7] < MIN_STATE || squareTotals[7] > MAX_STATE) {
+  while (squareTotals[ZERO_INDEX_SIZE] < MIN_STATE || squareTotals[ZERO_INDEX_SIZE] > MAX_STATE) {
     squareTotals = [];
     let sum = 0;
-    for (let i = 0; i < 7; i++) {
-      const r = randomIntFromInterval(ctx, MIN_STATE, Math.min(max - 7, MAX_STATE));
+    for (let i = 0; i < ZERO_INDEX_SIZE; i++) {
+      const r = randomIntFromInterval(ctx, MIN_STATE, Math.min(max - ZERO_INDEX_SIZE, MAX_STATE));
       squareTotals[i] = r;
       sum += r;
       if (sum > max)
         break;
     }
 
-    squareTotals[7] = max - sum;
+    squareTotals[ZERO_INDEX_SIZE] = max - sum;
   }
 
   return squareTotals;
@@ -53,10 +57,10 @@ const randomSquareTotal = (ctx, max) => {
 export const setupGridValues = (ctx) => {
   const values = [];
   const rowTotals = randomRowTotal(ctx);
-		for (let i = 0; i < 8; i++) {
+		for (let i = 0; i < SIZE; i++) {
 			const squareTotals = randomSquareTotal(ctx, rowTotals[i]);
-			for (let j = 0; j < 8; j++) {
-				values[8 * i + j] = squareTotals[j];
+			for (let j = 0; j < SIZE; j++) {
+				values[SIZE * i + j] = squareTotals[j];
 			}
 		}
   return values;
@@ -65,41 +69,41 @@ export const setupGridValues = (ctx) => {
 export const otherPlayer = currentPlayer => ((parseInt(currentPlayer, 10) + 1) % 2).toString();
 
 export const getBoxIndecies = (i) => {
-  const boxIndecies = [i-9, i-8, i-7, i-1, i+1, i+7, i+8, i+9];
-  if (i % 8 === 0) { 
+  const boxIndecies = [i-SIZE-1, i-SIZE, i-SIZE+1, i-1, i+1, i+SIZE-1, i+SIZE, i+SIZE+1];
+  if (i % SIZE === 0) { 
     // Remove left column       
-    let j = boxIndecies.indexOf(i-9);
+    let j = boxIndecies.indexOf(i-SIZE-1);
     if (j > -1) boxIndecies.splice(j, 1);
     j = boxIndecies.indexOf(i-1);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+7);
+    j = boxIndecies.indexOf(i+SIZE-1);
     if (j > -1) boxIndecies.splice(j, 1);
   }
-  if (i % 8 === 7) { 
+  if (i % SIZE === ZERO_INDEX_SIZE) { 
     // Remove right column       
-    let j = boxIndecies.indexOf(i-7);
+    let j = boxIndecies.indexOf(i-SIZE+1);
     if (j > -1) boxIndecies.splice(j, 1);
     j = boxIndecies.indexOf(i+1);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+9);
+    j = boxIndecies.indexOf(i+SIZE+1);
     if (j > -1) boxIndecies.splice(j, 1);
   }
-  if (Math.floor(i / 8) === 0) {
+  if (Math.floor(i / SIZE) === 0) {
     // Remove top row       
-    let j = boxIndecies.indexOf(i-9);
+    let j = boxIndecies.indexOf(i-SIZE-1);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i-8);
+    j = boxIndecies.indexOf(i-SIZE);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i-7);
+    j = boxIndecies.indexOf(i-SIZE+1);
     if (j > -1) boxIndecies.splice(j, 1);
   }
-  if (Math.floor(i / 8) === 7) {
+  if (Math.floor(i / SIZE) === ZERO_INDEX_SIZE) {
     // Remove bottom row       
-    let j = boxIndecies.indexOf(i+9);
+    let j = boxIndecies.indexOf(i+SIZE+1);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+8);
+    j = boxIndecies.indexOf(i+SIZE);
     if (j > -1) boxIndecies.splice(j, 1);
-    j = boxIndecies.indexOf(i+7);
+    j = boxIndecies.indexOf(i+SIZE-1);
     if (j > -1) boxIndecies.splice(j, 1);
   }
   return boxIndecies;
@@ -107,17 +111,17 @@ export const getBoxIndecies = (i) => {
 
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
-  if (currentMargin >= 9)
+  if (currentMargin >= MAX_MARGIN)
     return;
   
   G.gridScores[i][ctx.currentPlayer] += num;
 }
 
 const rowClick = (G, ctx, i) => {
-  const row = Math.floor(i / 8);
+  const row = Math.floor(i / SIZE);
   const rowIndecies = [];
-  for (let j = 0; j < 8; j++) {
-    const index = 8 * row + j;
+  for (let j = 0; j < SIZE; j++) {
+    const index = SIZE * row + j;
     rowIndecies.push(index);
   }
 
@@ -132,10 +136,10 @@ const rowClick = (G, ctx, i) => {
 }
 
 const columnClick = (G, ctx, i) => {
-  const col = i % 8;
+  const col = i % SIZE;
   const colIndecies = [];
-  for (let j = 0; j < 8; j++) {
-    const index = j * 8 + col;
+  for (let j = 0; j < SIZE; j++) {
+    const index = j * SIZE + col;
     colIndecies.push(index);
   }
 
@@ -150,7 +154,7 @@ const columnClick = (G, ctx, i) => {
 }
 
 const validNum = (num) => {
-  return num >= 0 && num < 64;
+  return num >= 0 && num < SQUARES;
 }
 const boxClick = (G, ctx, i) => { 
   const boxIndecies = getBoxIndecies(i);
@@ -170,7 +174,7 @@ const boxClick = (G, ctx, i) => {
 const winningPlayer = (array) => array.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
 
 export const isLockedSquare = (score) => {
-  return (Math.abs(score[1] - score[0]) >= 9);
+  return (Math.abs(score[1] - score[0]) >= MAX_MARGIN);
 }
 
 const getCurrentScores = (G, ctx) => {
@@ -222,7 +226,7 @@ const onPhaseEnd = (G, ctx) => {
     ctx.events.endGame(getEndGameMessage(G));
     ended = true;
   }
-  if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === 256 && G.lockedScores[1] === 256 )
+  if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === HALF_POINTS && G.lockedScores[1] === HALF_POINTS)
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
 
   if (!ended || !ctx.gameover)
@@ -237,7 +241,7 @@ export const Take257 = {
     selectedCell: undefined,
     lastSelected: undefined,
     gridValues: setupGridValues(ctx),
-    gridScores: Array(64).fill(Array(ctx.numPlayers).fill(0)),
+    gridScores: Array(SQUARES).fill(Array(ctx.numPlayers).fill(0)),
     history: []
   }),
 
@@ -288,7 +292,7 @@ export const Take257 = {
   ai: {
     enumerate: (G) => {
       const moves = [];
-      for (let i = 0; i < 64; i++) {
+      for (let i = 0; i < SQUARES; i++) {
         if (G.selectedCell === i || isLockedSquare(G.gridScores[i])) continue;
         moves.push({ move: 'clickCell', args: [i] });
       }

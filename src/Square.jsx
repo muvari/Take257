@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBoxIndecies } from './Take257';
+import { getBoxIndecies, SIZE } from './Take257';
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -64,9 +64,9 @@ class Square extends React.Component {
       return BIG_HOVER_CLASS[this.props.lastSelected];
 
     if (!this.isSelectable()) return;
-    if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / 8) === Math.floor(this.props.id / 8))
+    if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / SIZE) === Math.floor(this.props.id / SIZE))
       return HOVER_CLASS[this.props.playerId];
-    if (this.props.ctx.phase === "column" && this.props.hoveredCell % 8 === this.props.id % 8)
+    if (this.props.ctx.phase === "column" && this.props.hoveredCell % SIZE === this.props.id % SIZE)
       return HOVER_CLASS[this.props.playerId];
     if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;

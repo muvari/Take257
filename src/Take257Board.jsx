@@ -49,7 +49,7 @@ class Take257Board extends React.Component {
     const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
     const extraInfoText = infoText.square === -1 ? "" : `Red ${infoText.red + (round - 1)} Blue ${infoText.blue + (round - 1)}`
 		return (<>    
-      <div className="row"><h1 className="info-text">Take 257</h1></div>
+    <div className="row"><h1 className="info-text">{`Take ${TOTAL_POINTS / 2 + 1}`}</h1></div>
 			<div className="game row">
         <div className="game-board">
           <div className="score-board">
@@ -116,7 +116,7 @@ class Take257Board extends React.Component {
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
           </LineChart>
           <div style={{width: "500px", marginLeft: "-8px"}}>
-          <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are 512 points in the grid. 
+          <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are ${TOTAL_POINTS} points in the grid. 
           Your goal is to capture a majority by visiting each square more than the other player.`}
           </p> 
           <p>{`Clicking a square: +3 visit points (+2 in box selection rounds). 
