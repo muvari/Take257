@@ -19,17 +19,16 @@ class CustomBot extends MCTSBot {
   backpropagate(node) {
     // eslint-disable-next-line prefer-rest-params
     const result = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    const nodeState = node.state;
     node.visits++;
 
-    if (result.score !== undefined) {
+    if (result.score !== undefined)
       node.value += result.score;
-      if (result.score > HALF_POINTS)
-        node.value += HALF_POINTS;
-    }
+    if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS)
+      node.value += HALF_POINTS;
 
-    if (result.draw === true) {
+    if (result.draw === true)
       node.value += 50;
-    }
     
     if (node.parent) {
       this.backpropagate(node.parent, result);

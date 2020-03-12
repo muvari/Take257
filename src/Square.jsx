@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBoxIndecies, SIZE } from './Take257';
+import { getBoxIndecies, SIZE, MAX_MARGIN } from './Take257';
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -53,8 +53,8 @@ class Square extends React.Component {
     if (this.props.score[0] === this.props.score[1])
       return '';
     if (this.getWinningPlayer() === 0)
-      return Math.min(this.props.score[0] - this.props.score[1], 9);
-    return Math.min(this.props.score[1] - this.props.score[0], 9);
+      return Math.min(this.props.score[0] - this.props.score[1], MAX_MARGIN);
+    return Math.min(this.props.score[1] - this.props.score[0], MAX_MARGIN);
   }
   
   getShadowClass = () => {
@@ -103,7 +103,7 @@ class Square extends React.Component {
   
   isSelectable = () => (!this.isLockedSquare() && this.props.selectedCell !== this.props.id);
   
-  isLockedSquare = () => (Math.abs(this.props.score[1] - this.props.score[0]) >= 9);
+  isLockedSquare = () => (Math.abs(this.props.score[1] - this.props.score[0]) >= MAX_MARGIN);
 
 	render() {
 		return (

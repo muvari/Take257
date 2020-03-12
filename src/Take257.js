@@ -8,7 +8,7 @@ export const NUM_OF_TURNS = 30;
 export const SIZE = 8;
 export const SQUARES = SIZE * SIZE;
 export const ZERO_INDEX_SIZE = SIZE - 1;
-export const MAX_MARGIN = 9;
+export const MAX_MARGIN = 8;
 
 const randomIntFromInterval = (ctx, min, max) => {
   return Math.floor(ctx.random.Number() * (max - min + 1) + min);
