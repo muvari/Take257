@@ -48,7 +48,7 @@ class Take257Board extends React.Component {
 
     const { infoText } = this.state;
     const squareTitle = infoText.square === -1 ? "" : `Square ${infoText.square}`;
-    const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader}: ${infoText.net}${infoText.isLocked ? "*" : ""}`
+    const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
     const extraInfoText = infoText.square === -1 || infoText.isLocked ? "" : `Red: ${infoText.red + (round - 1)} | Blue: ${infoText.blue + (round - 1)}`
 		return (<>    
     <div className="row"><h1 className="info-text">{`Take ${TOTAL_POINTS / 2 + 1}`}</h1></div>
@@ -107,7 +107,7 @@ class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#c9302c', color: 'white', marginBottom: "8px" }}>{this.props.G.lockedScores[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
 					</div>
-          <LineChart width={500} height={250} data={this.props.G.history} margin={{
+          <LineChart width={500} height={250} data={this.props.ctx.gameover ? this.props.G.history.filter((_val, index) => index !== this.props.G.history.length - 1) : this.props.G.history} margin={{
             top: 5, right: 30, left: 5, bottom: 5,
           }}>
             <CartesianGrid strokeDasharray="3 3" />
