@@ -221,15 +221,13 @@ const getEndGameMessage = (G) => {
 }
 
 const onPhaseEnd = (G, ctx) => {
-  let ended = false;
-  if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2))) {
+  if (ctx.turn >= NUM_OF_TURNS * 2 && ((G.scores[0] > TOTAL_POINTS / 2) ||  (G.scores[1] > TOTAL_POINTS / 2)))
     ctx.events.endGame(getEndGameMessage(G));
-    ended = true;
-  }
+
   if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === HALF_POINTS && G.lockedScores[1] === HALF_POINTS)
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
 
-  if (!ended || !ctx.gameover)
+  if (!ctx.gameover)
     G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1]})
 }
 

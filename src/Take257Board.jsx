@@ -37,7 +37,9 @@ class Take257Board extends React.Component {
     const turn = (this.props.ctx.turn - 1) % 2 + 1;
     
     let phase;
-    if (this.props.ctx.phase === "row")
+    if (this.props.ctx.gameover)
+      phase = <i className="fas fa-flag-checkered" />;
+    else if (this.props.ctx.phase === "row")
       phase = <i className="fas fa-arrows-alt-h" />
     else if (this.props.ctx.phase === "column")
       phase = <i className="fas fa-arrows-alt-v" />
@@ -46,8 +48,8 @@ class Take257Board extends React.Component {
 
     const { infoText } = this.state;
     const squareTitle = infoText.square === -1 ? "" : `Square ${infoText.square}`;
-    const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
-    const extraInfoText = infoText.square === -1 || infoText.isLocked ? "" : `Red ${infoText.red + (round - 1)} Blue ${infoText.blue + (round - 1)}`
+    const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader}: ${infoText.net}${infoText.isLocked ? "*" : ""}`
+    const extraInfoText = infoText.square === -1 || infoText.isLocked ? "" : `Red: ${infoText.red + (round - 1)} | Blue: ${infoText.blue + (round - 1)}`
 		return (<>    
     <div className="row"><h1 className="info-text">{`Take ${TOTAL_POINTS / 2 + 1}`}</h1></div>
 			<div className="game row">
@@ -91,7 +93,7 @@ class Take257Board extends React.Component {
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
 						<div className="square info">{phase}</div>
-						<div className="square info">{round}</div>
+						<div className="square info">{this.props.ctx.gameover ? "F" : round}</div>
             <div className="slash">/</div>
 						<div className="square info">{30}</div>
 					</div>

@@ -26,13 +26,9 @@ class CustomBot extends MCTSBot {
       node.value += result.score;
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS)
       node.value += HALF_POINTS;
-
-    if (result.draw === true)
-      node.value += 50;
     
-    if (node.parent) {
+    if (node.parent)
       this.backpropagate(node.parent, result);
-    }
   }
 }
 
