@@ -5,10 +5,10 @@ export const MAX_STATE = 51;
 export const MIN_REGION = 31;
 export const MAX_REGION = 102;
 export const NUM_OF_TURNS = 30;
-export const SIZE = 8;
+export const SIZE = 7;
 export const SQUARES = SIZE * SIZE;
 export const ZERO_INDEX_SIZE = SIZE - 1;
-export const MAX_MARGIN = 8;
+export const MAX_MARGIN = 7;
 
 const randomIntFromInterval = (ctx, min, max) => {
   return Math.floor(ctx.random.Number() * (max - min + 1) + min);
