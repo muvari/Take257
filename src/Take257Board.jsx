@@ -95,7 +95,7 @@ class Take257Board extends React.Component {
 						<div className="square info">{phase}</div>
 						<div className="square info">{this.props.ctx.gameover ? "F" : round}</div>
             <div className="slash">/</div>
-						<div className="square info">{30}</div>
+						<div className="square info">{27}</div>
 					</div>
 					<div className="row">
 						<h3 className="col-12" style={{ textAlign: 'center' }}># of Squares</h3>
@@ -125,7 +125,7 @@ class Take257Board extends React.Component {
           Neighboring squares:  +1 point. 
           Unvisited squares: -1 point.`}</p>
           <p>Squares lock at +7.</p>
-          <p>Minimum 30 Rounds. Your color is randomized.</p>
+          <p>Minimum 27 Rounds. Your color is randomized.</p>
           </div>
 				</div>
       </div>
