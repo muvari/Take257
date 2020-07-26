@@ -56,8 +56,8 @@ class Board extends React.Component {
     }
 		return (
     <>
-      <div style={{ display: "flex", maxWidth: '500px', paddingLeft: '18px', justifyContent: 'center'}}>{colLets}</div>
-      <div onMouseLeave={() => {this.setState({hoveredCell: undefined});}} style={{ maxWidth: '500px'}}>
+      <div style={{ display: "flex", maxWidth: '500px', paddingLeft: '18px', justifyContent: 'center', width: "100vw"}}>{colLets}</div>
+      <div onMouseLeave={() => {this.setState({hoveredCell: undefined});}} style={{ maxWidth: '500px', width: "100vw"}}>
         {rows}
       </div>
     </>

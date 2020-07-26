@@ -6,7 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #fbfbfc;
-  min-width: 500px;
+}
+.root {
+  width: 100vw;
 }
 h3 {
   font-size: 1.5rem;
@@ -150,7 +152,6 @@ ol, ul {
 
 .game {
 	background: #fbfbfc;
-  min-width: 500px;
   margin-left: 8px;
 }
 .board-row {
@@ -164,13 +165,17 @@ ol, ul {
   box-shadow: 0 0 0 1px rgba(67,41,163,.08), 0 1px 5px 0 rgba(67,41,163,.08);
   padding: 4px;
   border-radius: 4px;
-  min-width: 500px;
 }
 
 .game-info {
   margin-left: 20px;
   max-width: 600px;
+  width: calc(100vw - 20px);
   margin-top: 32px;
+}
+.recharts-wrapper {
+  margin-left: -50px;
+  width: calc(100vw);
 }
 .progress {
   justify-content: space-between;
@@ -189,6 +194,7 @@ ol, ul {
 }
 .row {
   justify-content: center;
+  margin: 0;
 }
 .slash {
   font-size: 28px;
