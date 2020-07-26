@@ -4,7 +4,7 @@ import { HALF_POINTS } from './Take257';
 class CustomBot extends MCTSBot {
   constructor(ai) {
     ai.iterations = 1000;
-    ai.playoutDepth = (G, ctx) => (Math.min(6, Math.max(2, 60 - ctx.turn)));
+    ai.playoutDepth = (G, ctx) => (Math.min(2, Math.max(2, 54 - ctx.turn)));
     ai.objectives = (G) => ({
       'better than player 1': {
         checker: (G, ctx) => {
@@ -21,6 +21,9 @@ class CustomBot extends MCTSBot {
     const result = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     const nodeState = node.state;
     node.visits++;
+
+    if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
+      node.value = 100000;
 
     if (result.score !== undefined)
       node.value += result.score;

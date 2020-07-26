@@ -115,7 +115,18 @@ ol, ul {
 .square:active {
   background-color: #d4d4d4 !important;
 }
-
+.row-num {
+  font-size: 18px;
+  margin: 4px;
+  font-weight: 600;
+}
+.col-num {
+  font-size: 18px;
+  font-weight: 600;
+  width: 61px;
+  display: flex;
+  justify-content: center;
+}
 .red-big-hover {
   border: 4px solid red;
 }
@@ -123,10 +134,14 @@ ol, ul {
   border: 4px solid blue;
 }
 .red-hover {
-  border: 2px solid red;
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(255,0,0,1);
+  -moz-box-shadow: inset 0px 0px 1px 1px rgba(255,0,0,1);
+   box-shadow: inset 0px 0px 1px 1px rgba(255,0,0,1);
 }
 .blue-hover {
-  border: 2px solid blue;
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0,0,255,1);
+  -moz-box-shadow: inset 0px 0px 1px 1px rgba(0,0,255,1);
+   box-shadow: inset 0px 0px 1px 1px rgba(0,0,255,1);
 }
 	
 .kbd-navigation .square:focus {
@@ -141,6 +156,7 @@ ol, ul {
 .board-row {
   display: inline-flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
 }
 .game-board {
