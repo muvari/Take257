@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBoxIndecies, SIZE, MAX_MARGIN } from './Take257';
+import { getBoxIndecies, getOuterBoxIndecies, SIZE, MAX_MARGIN } from './Take257';
 
 const RED_CODES = [
 	'#FFE5E1',
@@ -63,16 +63,35 @@ class Square extends React.Component {
     if (this.props.selectedCell === this.props.id)
       return BIG_HOVER_CLASS[this.props.lastSelected];
 
-    if (!this.isSelectable()) return;
-    if (this.props.ctx.phase === "row" && Math.floor(this.props.hoveredCell / SIZE) === Math.floor(this.props.id / SIZE))
-      return HOVER_CLASS[this.props.playerId];
-    if (this.props.ctx.phase === "column" && this.props.hoveredCell % SIZE === this.props.id % SIZE)
-      return HOVER_CLASS[this.props.playerId];
+    if (!this.isSelectable()) return '';
+    if (this.props.hoveredCell === undefined) return '';
+    if (this.props.ctx.phase === "row") {
+      if (Math.floor(this.props.hoveredCell / SIZE) === Math.floor(this.props.id / SIZE))
+        return HOVER_CLASS[this.props.playerId];
+      if (Math.floor((this.props.hoveredCell - SIZE) / SIZE) === Math.floor(this.props.id / SIZE))
+        return '';
+      if (Math.floor((this.props.hoveredCell + SIZE) / SIZE) === Math.floor(this.props.id / SIZE))
+        return '';
+      return HOVER_CLASS[(Number(this.props.playerId) + 1) % 2];
+    }
+    if (this.props.ctx.phase === "column") {
+      if (this.props.hoveredCell % SIZE === this.props.id % SIZE)
+        return HOVER_CLASS[this.props.playerId];
+      if ((this.props.hoveredCell + 1) % SIZE === this.props.id % SIZE)
+        return '';
+      if ((this.props.hoveredCell - 1) % SIZE === this.props.id % SIZE)
+        return '';
+      return HOVER_CLASS[(Number(this.props.playerId) + 1) % 2];
+    }
     if (this.props.ctx.phase === "box") {
       const i = this.props.hoveredCell;
       const boxIndecies = getBoxIndecies(i);
       if (boxIndecies.indexOf(this.props.id) > -1)
         return HOVER_CLASS[this.props.playerId];
+      const outerBoxIndecies = getOuterBoxIndecies(i);
+      if (outerBoxIndecies.indexOf(this.props.id) > -1)
+        return '';
+      return HOVER_CLASS[(Number(this.props.playerId) + 1) % 2];
     }
   }
   
@@ -93,7 +112,7 @@ class Square extends React.Component {
   }
   
   squareLabel = () => ({ 
-            square: this.props.id,
+            square: this.getName(),
             leader: this.getWinningLabel(this.getWinningPlayer()),
             net: this.getNetScore(),
             isLocked: this.isLockedSquare(),
@@ -104,6 +123,8 @@ class Square extends React.Component {
   isSelectable = () => (!this.isLockedSquare() && this.props.selectedCell !== this.props.id);
   
   isLockedSquare = () => (Math.abs(this.props.score[1] - this.props.score[0]) >= MAX_MARGIN);
+
+  getName = () => `${this.props.col}${this.props.row}`;
 
 	render() {
 		return (

@@ -1,7 +1,7 @@
 export const TOTAL_POINTS = 512;
 export const HALF_POINTS = TOTAL_POINTS / 2;
-export const MIN_STATE = 1;
-export const MAX_STATE = 51;
+export const MIN_STATE = 3;
+export const MAX_STATE = 55;
 export const MIN_REGION = 31;
 export const MAX_REGION = 102;
 export const NUM_OF_TURNS = 27;
@@ -109,20 +109,110 @@ export const getBoxIndecies = (i) => {
   return boxIndecies;
 }
 
+export const getOuterBoxIndecies = (i) => {
+  const boxIndecies = [i-(SIZE*2)-2, i-(SIZE*2)-1, i-(SIZE*2), i-(SIZE*2)+1, i-(SIZE*2)+2,
+        i-SIZE-2, i-2, i+2, i-SIZE+2, i+SIZE-2, i+SIZE+2,
+        i+(SIZE*2)-2, i+(SIZE*2)-1, i+(SIZE*2), i+(SIZE*2)+1, i+(SIZE*2)+2];
+
+    if (i % SIZE === 0 || i % SIZE === 1) { 
+      // Remove left column       
+      let j = boxIndecies.indexOf(i-(SIZE*2)-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-SIZE-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+SIZE-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2)-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+
+      if (i % SIZE === 0) {
+        j = boxIndecies.indexOf(i-(SIZE*2)-1);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+(SIZE*2)-1);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+    }
+    if (i % SIZE === ZERO_INDEX_SIZE || i % SIZE === ZERO_INDEX_SIZE - 1) { 
+      // Remove right column       
+      let j = boxIndecies.indexOf(i-(SIZE*2)+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-SIZE+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+SIZE+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2)+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+
+      if (i % SIZE === ZERO_INDEX_SIZE) {
+        j = boxIndecies.indexOf(i-(SIZE*2)+1);
+        if (j > -1) boxIndecies.splice(j, 1);
+        j = boxIndecies.indexOf(i+(SIZE*2)+1);
+        if (j > -1) boxIndecies.splice(j, 1);
+      }
+    }
+    if (Math.floor(i / SIZE) === 0 || Math.floor(i / SIZE) === 1) {
+      // Remove top row
+      let j = boxIndecies.indexOf(i-(SIZE*2)-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-(SIZE*2)-1);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-(SIZE*2));
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-(SIZE*2)+1);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i-(SIZE*2)+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+    }
+    if (Math.floor(i / SIZE) === ZERO_INDEX_SIZE || Math.floor(i / SIZE) === ZERO_INDEX_SIZE - 1) {
+      // Remove bottom row       
+      let j = boxIndecies.indexOf(i+(SIZE*2)-2);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2)-1);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2));
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2)+1);
+      if (j > -1) boxIndecies.splice(j, 1);
+      j = boxIndecies.indexOf(i+(SIZE*2)+2);
+      if (j > -1) boxIndecies.splice(j, 1);
+    }
+  return boxIndecies;
+};
+
+
 const changeScore = (G, ctx, i, num) => {
   const currentMargin = Math.abs(G.gridScores[i][ctx.currentPlayer] - G.gridScores[i][otherPlayer(ctx.currentPlayer)]);
   if (currentMargin >= MAX_MARGIN)
     return;
   
-  G.gridScores[i][ctx.currentPlayer] += num;
+  if (num > 0)
+    G.gridScores[i][ctx.currentPlayer] += num;
+  else
+    G.gridScores[i][otherPlayer(ctx.currentPlayer)] -= num;
 }
 
 const rowClick = (G, ctx, i) => {
   const row = Math.floor(i / SIZE);
   const rowIndecies = [];
+  const outerRowIndecies = [];
   for (let j = 0; j < SIZE; j++) {
     const index = SIZE * row + j;
     rowIndecies.push(index);
+  }
+
+  const leftRow = Math.floor((i - SIZE) / SIZE);
+  const rightRow = Math.floor((i + SIZE) / SIZE);
+  for (let j = 0; j < SIZE; j++) {
+    const index = SIZE * leftRow + j;
+    outerRowIndecies.push(index);
+  }
+  for (let j = 0; j < SIZE; j++) {
+    const index = SIZE * rightRow + j;
+    outerRowIndecies.push(index);
   }
 
   for (let j = 0; j < SQUARES; j++) {
@@ -130,6 +220,9 @@ const rowClick = (G, ctx, i) => {
       changeScore(G, ctx, i, 3);
       continue;
     }
+
+    if (outerRowIndecies.indexOf(j) !== -1) 
+      continue;
 
     changeScore(G, ctx, j, rowIndecies.indexOf(j) !== -1 ? 1 : -1);
   }
@@ -138,9 +231,21 @@ const rowClick = (G, ctx, i) => {
 const columnClick = (G, ctx, i) => {
   const col = i % SIZE;
   const colIndecies = [];
+  const outerColIndecies = [];
   for (let j = 0; j < SIZE; j++) {
     const index = j * SIZE + col;
     colIndecies.push(index);
+  }
+
+  const topCol = (i - 1) % SIZE;
+  const bottomCol = (i + 1) % SIZE;
+  for (let j = 0; j < SIZE; j++) {
+    const index = j * SIZE + topCol;
+    outerColIndecies.push(index);
+  }
+  for (let j = 0; j < SIZE; j++) {
+    const index = j * SIZE + bottomCol;
+    outerColIndecies.push(index);
   }
 
   for (let j = 0; j < SQUARES; j++) {
@@ -148,6 +253,9 @@ const columnClick = (G, ctx, i) => {
       changeScore(G, ctx, i, 3);
       continue;
     }
+
+    if (outerColIndecies.indexOf(j) !== -1)
+      continue;
 
     changeScore(G, ctx, j, colIndecies.indexOf(j) !== -1 ? 1 : -1);
   }  
@@ -160,11 +268,17 @@ const boxClick = (G, ctx, i) => {
   const boxIndecies = getBoxIndecies(i);
   boxIndecies.push(i);
 
+  const outerBoxIndecies = getOuterBoxIndecies(i);
+
   for (let j = 0; j < SQUARES; j++) {
     if (j === i) {
       changeScore(G, ctx, i, 2);
       continue;
     }
+
+    if (outerBoxIndecies.indexOf(j) !== -1)
+      continue;
+
     if (validNum(j))
       changeScore(G, ctx, j, boxIndecies.indexOf(j) !== -1 ? 1 : -1);
   } 
@@ -258,7 +372,7 @@ export const Take257 = {
   turn: {
     moveLimit: 1,
     order: {
-      first: (G, ctx) => (parseInt(ctx.turn/ctx.numPlayers, 10) % ctx.numPlayers),
+      first: () => 0,
       next: (G, ctx) => {
         if ((ctx.turn + 1) % ctx.numPlayers < ctx.numPlayers - 1)
           return (ctx.playOrderPos + 1) % ctx.numPlayers;
