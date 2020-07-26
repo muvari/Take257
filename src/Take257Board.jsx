@@ -49,7 +49,7 @@ class Take257Board extends React.Component {
     const { infoText } = this.state;
     const squareTitle = infoText.square === -1 ? "" : `Square ${infoText.square}`;
     const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
-    const extraInfoText = infoText.square === -1 || infoText.isLocked ? "" : `Red: ${infoText.red + (round - 1)} | Blue: ${infoText.blue + (round - 1)}`
+    const extraInfoText = infoText.square === -1 ? "" : `Red: ${infoText.red} | Blue: ${infoText.blue}`
 		return (<>    
     <div className="row"><h1 className="info-text">{`Take ${TOTAL_POINTS / 2 + 1}`}</h1></div>
 			<div className="game row">
