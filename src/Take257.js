@@ -372,7 +372,7 @@ export const Take257 = {
   turn: {
     moveLimit: 1,
     order: {
-      first: () => 0,
+      first: () => 1,
       next: (G, ctx) => {
         if ((ctx.turn + 1) % ctx.numPlayers < ctx.numPlayers - 1)
           return (ctx.playOrderPos + 1) % ctx.numPlayers;

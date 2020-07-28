@@ -24,13 +24,12 @@ class CustomBot extends MCTSBot {
 
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
       node.value = 100000;
-
     if (result.score !== undefined)
       node.value += result.score;
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS)
-      node.value += 100;
+      node.value += 25;
     if (nodeState.G.scores[nodeState.G.playerID] <= HALF_POINTS)
-      node.value += 100;
+      node.value += 25;
     if (node.parent)
       this.backpropagate(node.parent, result);
   }

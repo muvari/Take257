@@ -125,7 +125,7 @@ class Take257Board extends React.Component {
           Neighboring squares:  +1 point. 
           Unvisited squares: -1 point.`}</p>
           <p>Squares lock at +7.</p>
-          <p>Minimum 27 Rounds. Your color is randomized.</p>
+          <p>Minimum 27 Rounds.</p>
           </div>
 				</div>
       </div>

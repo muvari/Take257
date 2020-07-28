@@ -19,13 +19,13 @@ const ClientOptions = (playerId) => {
   }
 };
 
-const Take257Client0 = Client(ClientOptions("0"));
+// const Take257Client0 = Client(ClientOptions("0"));
 const Take257Client1 = Client(ClientOptions("1"));
 
 const App = () => {
-  const randomPlayerId = Math.round(Math.random());
-  if (randomPlayerId === 0)
-    return <Take257Client0 playerID="0" />;
+  // const randomPlayerId = Math.round(Math.random());
+  // if (randomPlayerId === 0)
+  //   return <Take257Client0 playerID="0" />;
   return <Take257Client1 playerID="1" />;
 };
 
