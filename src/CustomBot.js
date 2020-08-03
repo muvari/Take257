@@ -10,7 +10,7 @@ class CustomBot extends MCTSBot {
         checker: (G, ctx) => {
           return ((ctx.turn % ctx.numPlayers === 1));
         },
-        weight: (function weight(G){return (G.scores[G.botID] - G.scores[G.playerID]);}(G)),
+        weight: (function weight(G){return (Math.max(0, G.scores[G.botID] - G.scores[G.playerID]));}(G)),
       },
     });
     super(ai);
@@ -23,7 +23,9 @@ class CustomBot extends MCTSBot {
     node.visits++;
 
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
-      node.value = 100000;
+      node.value += 100000;
+    if (nodeState.G.scores[nodeState.G.playerID] <= HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
+      node.value += 50000;
     if (result.score !== undefined)
       node.value += result.score;
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS)
