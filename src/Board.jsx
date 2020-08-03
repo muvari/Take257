@@ -21,7 +21,7 @@ class Board extends React.Component {
   }
   
 	renderSquare(i, row, col) {
-    const { G, moves, ctx, setInfoText, playerId } = this.props;
+    const { G, moves, ctx, setInfoText, playerId, hoverTurnNum } = this.props;
     const { hoveredCell } = this.state;
 
 		return (
@@ -31,7 +31,7 @@ class Board extends React.Component {
         row={row + 1}
         col={colLetter[col]}
         value={G.gridValues[i]}
-        score={G.gridScores[i]}
+        score={hoverTurnNum ? G.history[hoverTurnNum].gridScores[i] : G.gridScores[i]}
         selectedCell={G.selectedCell}
         lastSelected={G.lastSelected}
         hoveredCell={hoveredCell}

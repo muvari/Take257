@@ -15,7 +15,8 @@ class Take257Board extends React.Component {
     super(props);
 
     this.state = {
-      infoText: { leader: "Draw", square: -1, net: 0, red: 0, blue: 0, isLocked: false }
+      infoText: { leader: "Draw", square: -1, net: 0, red: 0, blue: 0, isLocked: false },
+      hoverTurnNum: undefined
     }
 
     this.setInfoText = this.setInfoText.bind(this);
@@ -78,7 +79,7 @@ class Take257Board extends React.Component {
             <ProgressBar max={TOTAL_POINTS} bsPrefix="red" now={this.props.G.scores[0]} key={1} />
             <ProgressBar max={TOTAL_POINTS} bsPrefix="blue" now={this.props.G.scores[1]} key={2} />
 					</ProgressBar>
-          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} setInfoText={this.setInfoText} playerId={this.props.playerID} />
+          <Board G={this.props.G} ctx={this.props.ctx} moves={this.props.moves} hoverTurnNum={this.state.hoverTurnNum} setInfoText={this.setInfoText} playerId={this.props.playerID} />
           <div className="info-text">
             {squareTitle}
           </div>
@@ -107,15 +108,15 @@ class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#c9302c', color: 'white', marginBottom: "8px" }}>{this.props.G.lockedScores[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
 					</div>
-          <LineChart width={Math.min(500, window.screen.width)} height={250} data={this.props.ctx.gameover ? this.props.G.history.filter((_val, index) => index !== this.props.G.history.length - 1) : this.props.G.history} margin={{
+          <LineChart onMouseMove={(e)=>{this.setState({hoverTurnNum: e.activeTooltipIndex});}} onMouseLeave={()=>{this.setState({hoverTurnNum: undefined});}} width={Math.min(500, window.screen.width)} height={250} data={this.props.ctx.gameover ? this.props.G.history.filter((_val, index) => index !== this.props.G.history.length - 1) : this.props.G.history} margin={{
             top: 5, right: 30, left: 5, bottom: 5,
-          }}>
+            }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis ticks={[64, 128, 192, 256, 320]} />
             <Tooltip />
             <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" />
+            <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" activeDot={{ r: 8 }}/>
           </LineChart>
           <div style={{maxWidth: "500px", marginLeft: "-8px", width: "100vw"}}>
           <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are ${TOTAL_POINTS} points in the grid. 
