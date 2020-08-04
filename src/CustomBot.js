@@ -22,6 +22,7 @@ class CustomBot extends MCTSBot {
     const nodeState = node.state;
     node.visits++;
 
+    node.value += 300; // min
     if (nodeState.G.scores[nodeState.G.botID] > HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
       node.value += 100000;
     if (nodeState.G.scores[nodeState.G.playerID] <= HALF_POINTS && nodeState.ctx.turn >= 53 && nodeState.ctx.turn % 2 === 1)
