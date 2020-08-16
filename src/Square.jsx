@@ -79,7 +79,7 @@ class Square extends React.Component {
         return HOVER_CLASS[this.props.playerId];
       if ((this.props.hoveredCell + 1) % SIZE === this.props.id % SIZE)
         return '';
-      if ((this.props.hoveredCell - 1) % SIZE === this.props.id % SIZE)
+      if ((this.props.hoveredCell - 1) % SIZE === this.props.id % SIZE || (this.props.hoveredCell === 0 && this.props.id % SIZE === 6))
         return '';
       return HOVER_CLASS[(Number(this.props.playerId) + 1) % 2];
     }

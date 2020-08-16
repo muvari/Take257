@@ -47,6 +47,10 @@ class Take257Board extends React.Component {
     else if (this.props.ctx.phase === "box")
       phase = <i className="fas fa-th" />;
 
+    const rowPhase = <i className={`fas ${this.props.ctx.gameover ? "fa-flag-checkered" : "fa-arrows-alt-h"}`} />;
+    const columnPhase = <i className={`fas ${this.props.ctx.gameover ? "fa-flag-checkered" : "fa-arrows-alt-v"}`} />;
+    const boxPhase = <i className={`fas ${this.props.ctx.gameover ? "fa-flag-checkered" : "fa-th"}`} />;
+
     const { infoText } = this.state;
     const squareTitle = infoText.square === -1 ? "" : `Square ${infoText.square}`;
     const squareInfoText = infoText.square === -1 ? "" : `${infoText.leader} ${infoText.net}${infoText.isLocked ? "*" : ""}`
@@ -93,11 +97,15 @@ class Take257Board extends React.Component {
         <div className="game-info col-6">
 					<div><h3 style={{ textAlign: 'center' }}>{status}</h3></div>
 					<div className="row">
-						<div className="square info">{phase}</div>
 						<div className="square info">{this.props.ctx.gameover ? "F" : round}</div>
             <div className="slash">/</div>
 						<div className="square info">{27}</div>
 					</div>
+          <div className="row">
+						<div className={`square info ${this.props.ctx.phase === "row" ? "current" : ""}`}>{rowPhase}</div>
+						<div className={`square info ${this.props.ctx.phase === "column" ? "current" : ""}`}>{columnPhase}</div>
+						<div className={`square info ${this.props.ctx.phase === "box" ? "current" : ""}`}>{boxPhase}</div>
+          </div>
 					<div className="row">
 						<h3 className="col-12" style={{ textAlign: 'center' }}># of Squares</h3>
 						<div className="square info" style={{ background: '#c9302c', color: 'white' }}>{this.props.G.states[0]}</div>
@@ -122,9 +130,9 @@ class Take257Board extends React.Component {
           <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are ${TOTAL_POINTS} points in the grid. 
           Your goal is to capture a majority by visiting each square more than the other player.`}
           </p> 
-          <p>{`Clicking a square: +3 visit points (+2 in box selection rounds). 
+          <p>{`Scoring: Clicking a square: +3 visit points (+2 in box selection rounds). 
           Neighboring squares:  +1 point. 
-          Unvisited squares: -1 point.`}</p>
+          Non-adjacent squares: -1 point.`}</p>
           <p>Squares lock at +7.</p>
           <p>Minimum 27 Rounds.</p>
           </div>
