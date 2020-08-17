@@ -340,9 +340,9 @@ const onPhaseEnd = (G, ctx) => {
 
   if (ctx.turn >= NUM_OF_TURNS * 2 && G.lockedScores[0] === HALF_POINTS && G.lockedScores[1] === HALF_POINTS)
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
-
+  
   if (!ctx.gameover)
-    G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1], undecided: TOTAL_POINTS - (G.scores[0] + G.scores[1]), gridScores: G.gridScores})
+    G.history.push({name: `${G.history.length + 1}`, Red: G.scores[0], Blue: G.scores[1], gridScores: G.gridScores})
 }
 
 export const Take257 = {

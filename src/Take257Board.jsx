@@ -113,9 +113,8 @@ class Take257Board extends React.Component {
             <XAxis dataKey="name" />
             <YAxis ticks={[64, 128, 192, 256, 320]} />
             <Tooltip />
-            <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" activeDot={{ r: 8 }}/>
-            <Line type="monotone" dataKey="undecided" stroke="rgba(0,0,0,1)"/>
+            <Line type="monotone" dataKey="Red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="Blue" stroke="rgba(5,76,137,1)" activeDot={{ r: 8 }}/>
           </LineChart>
           <div style={{maxWidth: "500px", marginLeft: "-8px", width: "100vw"}}>
           <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are ${TOTAL_POINTS} points in the grid. 
