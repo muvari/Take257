@@ -36,16 +36,6 @@ class Take257Board extends React.Component {
 
     const round = Math.floor((this.props.ctx.turn - 1) / this.props.ctx.numPlayers) + 1;
     const turn = (this.props.ctx.turn - 1) % 2 + 1;
-    
-    let phase;
-    if (this.props.ctx.gameover)
-      phase = <i className="fas fa-flag-checkered" />;
-    else if (this.props.ctx.phase === "row")
-      phase = <i className="fas fa-arrows-alt-h" />
-    else if (this.props.ctx.phase === "column")
-      phase = <i className="fas fa-arrows-alt-v" />
-    else if (this.props.ctx.phase === "box")
-      phase = <i className="fas fa-th" />;
 
     const rowPhase = <i className={`fas ${this.props.ctx.gameover ? "fa-flag-checkered" : "fa-arrows-alt-h"}`} />;
     const columnPhase = <i className={`fas ${this.props.ctx.gameover ? "fa-flag-checkered" : "fa-arrows-alt-v"}`} />;
