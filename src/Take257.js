@@ -342,7 +342,7 @@ const onPhaseEnd = (G, ctx) => {
     ctx.events.endGame({ draw: true, message: "Draw", score: 0.5 });
 
   if (!ctx.gameover)
-    G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1], gridScores: G.gridScores})
+    G.history.push({name: `${G.history.length + 1}`, red: G.scores[0], blue: G.scores[1], undecided: TOTAL_POINTS - (G.scores[0] + G.scores[1]), gridScores: G.gridScores})
 }
 
 export const Take257 = {

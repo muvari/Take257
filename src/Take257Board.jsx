@@ -55,7 +55,7 @@ class Take257Board extends React.Component {
                 (<div 
                   className={this.props.ctx.gameover ? 'win-text' : 'score-text'} 
                   style={this.props.ctx.gameover ? {} : { marginTop: "40px" }}>
-                  {this.props.ctx.gameover ? this.props.ctx.gameover.message : `Round ${round}-${turn}  - Your turn`}</div>) : (
+                  {this.props.ctx.gameover ? this.props.ctx.gameover.message : (this.state.hoverTurnNum ? `History - Round ${this.state.hoverTurnNum + 1}` : `Round ${round}-${turn}  - Your turn`)}</div>) : (
                 <div className="loading score-text">
                   <BounceLoader
                     css={{margin: "0 auto"}}
@@ -92,9 +92,9 @@ class Take257Board extends React.Component {
 						<div className="square info">{27}</div>
 					</div>
           <div className="row">
-						<div className={`square info ${this.props.ctx.phase === "row" ? "current" : ""}`}>{rowPhase}</div>
-						<div className={`square info ${this.props.ctx.phase === "column" ? "current" : ""}`}>{columnPhase}</div>
-						<div className={`square info ${this.props.ctx.phase === "box" ? "current" : ""}`}>{boxPhase}</div>
+						<div title="Row" className={`square info ${this.props.ctx.phase === "row" ? "current" : ""}`}>{rowPhase}</div>
+						<div title="Column" className={`square info ${this.props.ctx.phase === "column" ? "current" : ""}`}>{columnPhase}</div>
+						<div title="Box" className={`square info ${this.props.ctx.phase === "box" ? "current" : ""}`}>{boxPhase}</div>
           </div>
 					<div className="row">
 						<h3 className="col-12" style={{ textAlign: 'center' }}># of Squares</h3>
@@ -106,7 +106,7 @@ class Take257Board extends React.Component {
 						<div className="square info" style={{ background: '#c9302c', color: 'white', marginBottom: "8px" }}>{this.props.G.lockedScores[0]}</div>
 						<div className="square info" style={{ background: '#337ab7', color: 'white' }}>{this.props.G.lockedScores[1]}</div>
 					</div>
-          <LineChart onMouseMove={(e)=>{this.setState({hoverTurnNum: e.activeTooltipIndex});}} onMouseLeave={()=>{this.setState({hoverTurnNum: undefined});}} width={Math.min(500, window.screen.width)} height={250} data={this.props.ctx.gameover ? this.props.G.history.filter((_val, index) => index !== this.props.G.history.length - 1) : this.props.G.history} margin={{
+          <LineChart onMouseMove={(e)=>{this.setState({hoverTurnNum: e.activeTooltipIndex});}} onMouseLeave={()=>{this.setState({hoverTurnNum: undefined});}} width={Math.min(500, window.screen.width)} height={250} data={this.props.G.history} margin={{
             top: 5, right: 30, left: 5, bottom: 5,
             }}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -115,6 +115,7 @@ class Take257Board extends React.Component {
             <Tooltip />
             <Line type="monotone" dataKey="red" stroke="rgba(179,45,41)" activeDot={{ r: 8 }} />
             <Line type="monotone" dataKey="blue" stroke="rgba(5,76,137,1)" activeDot={{ r: 8 }}/>
+            <Line type="monotone" dataKey="undecided" stroke="rgba(0,0,0,1)"/>
           </LineChart>
           <div style={{maxWidth: "500px", marginLeft: "-8px", width: "100vw"}}>
           <span style={{fontWeight: "700"}}>Directions: </span><p>{`There are ${TOTAL_POINTS} points in the grid. 
